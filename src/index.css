@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #F8F6F3;
+  color: #4A4A4A;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes luxuryFloat {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-15px) translateX(5px) rotate(0.5deg);
+  }
+  50% {
+    transform: translateY(-25px) translateX(8px) rotate(0.8deg);
+  }
+  75% {
+    transform: translateY(-15px) translateX(5px) rotate(0.3deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.2;
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 1.2s ease-out forwards;
+}
+
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+.luxury-float {
+  animation: luxuryFloat 7s ease-in-out infinite, fadeIn 2s ease-out forwards;
+  opacity: 0;
+}
