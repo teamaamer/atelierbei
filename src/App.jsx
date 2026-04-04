@@ -19,6 +19,7 @@ function App() {
       <BeforeAfterSection />
       <ReviewsSection />
       <BeautyBlogSection />
+      <LocationSection />
       <CTASection />
       <Footer />
       
@@ -525,6 +526,73 @@ const BeautyBlogSection = () => {
           >
             <Instagram className="w-5 h-5" />
             Follow for More
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const LocationSection = () => {
+  return (
+    <section className="py-32 bg-ivory">
+      <div className="container mx-auto px-6 lg:px-12">
+        <div className="text-center space-y-4 mb-20">
+          <h2 className="text-5xl font-serif font-light text-[#3A3A3A]">Visit Us</h2>
+          <div className="w-20 h-px bg-gold mx-auto"></div>
+          <p className="text-lg text-[#3A3A3A]/70 font-light">
+            21058 CA-1 M-100 Studio, Studio #303, Huntington Beach, CA 92648
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto items-center">
+          <div className="rounded-lg overflow-hidden shadow-md h-[600px]">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3320.8675891234567!2d-117.9965571!3d33.6545474!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80dd212071815fbb%3A0xc820ad3e061baf51!2sAtelier%20Bei%20Permanent%20Makeup!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+
+          <div className="bg-beige/20 rounded-lg overflow-hidden shadow-md">
+            <div className="aspect-[9/16] max-h-[600px]">
+              <iframe
+                src="https://www.instagram.com/reel/DVqh7x1FRVt/embed"
+                className="w-full h-full"
+                frameBorder="0"
+                scrolling="no"
+                allowTransparency="true"
+                allow="encrypted-media"
+              ></iframe>
+            </div>
+            <div className="p-6 text-center">
+              <a 
+                href="https://www.instagram.com/reel/DVqh7x1FRVt/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gold hover:text-[#3A3A3A] transition-colors duration-300 font-light inline-flex items-center gap-2"
+              >
+                View on Instagram
+                <Instagram className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="text-center mt-12">
+          <a 
+            href="https://www.google.com/maps/place/Atelier+Bei+Permanent+Makeup/@33.6545474,-117.9965571,17z/data=!3m1!4b1!4m6!3m5!1s0x80dd212071815fbb:0xc820ad3e061baf51!8m2!3d33.6545474!4d-117.9965571!16s%2Fg%2F11n4w1245y?entry=ttu&g_ep=EgoyMDI2MDQwMS4wIKXMDSoASAFQAw%3D%3D"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-10 py-4 bg-gold text-white rounded-full font-light tracking-wide text-base
+                     hover:bg-opacity-90 transition-all duration-500 shadow-md hover:shadow-xl"
+          >
+            <MapPin className="w-5 h-5" />
+            Get Directions
           </a>
         </div>
       </div>
