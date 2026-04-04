@@ -20,7 +20,6 @@ function App() {
       <ReviewsSection />
       <BeautyBlogSection />
       <LocationSection />
-      <CTASection />
       <BookingFormSection />
       <Footer />
       
@@ -601,42 +600,9 @@ const LocationSection = () => {
   );
 };
 
-const CTASection = () => {
-  return (
-    <section id="contact" className="py-40 bg-blush/20 relative overflow-hidden">
-      <div className="absolute bottom-0 -left-32 z-0 opacity-[0.08]">
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-          className="w-[400px] h-auto"
-        >
-          <source src="/flowervid.mp4" type="video/mp4" />
-        </video>
-      </div>
-
-      <div className="container mx-auto px-6 lg:px-12 relative z-10">
-        <div className="max-w-2xl mx-auto text-center space-y-8">
-          <h2 className="text-5xl font-serif font-light text-[#3A3A3A]">
-            Ready to Enhance Your Natural Beauty?
-          </h2>
-          <p className="text-lg text-[#3A3A3A]/70 font-light">
-            Book your consultation today and discover the art of permanent makeup perfection.
-          </p>
-          <button className="px-14 py-5 bg-gold text-white rounded-full font-light tracking-wide text-base
-                           hover:bg-opacity-90 transition-all duration-300 hover:shadow-xl">
-            Book Appointment
-          </button>
-        </div>
-      </div>
-    </section>
-  );
-};
-
 const BookingFormSection = () => {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-blush/20">
       <div className="container mx-auto px-6 lg:px-12">
         <div className="max-w-3xl mx-auto">
           <div className="text-center space-y-4 mb-12">
