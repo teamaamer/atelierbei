@@ -21,6 +21,7 @@ function App() {
       <BeautyBlogSection />
       <LocationSection />
       <CTASection />
+      <BookingFormSection />
       <Footer />
       
       {/* Floating WhatsApp Button */}
@@ -627,6 +628,133 @@ const CTASection = () => {
                            hover:bg-opacity-90 transition-all duration-300 hover:shadow-xl">
             Book Appointment
           </button>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const BookingFormSection = () => {
+  return (
+    <section className="py-20 bg-white">
+      <div className="container mx-auto px-6 lg:px-12">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center space-y-4 mb-12">
+            <h2 className="text-5xl font-serif font-light text-[#3A3A3A]">Book an Appointment</h2>
+            <div className="w-20 h-px bg-gold mx-auto"></div>
+            <p className="text-lg text-[#3A3A3A]/70 font-light">
+              Fill out the form below and we'll get back to you shortly to confirm your appointment
+            </p>
+          </div>
+
+          <form 
+            action="https://formsubmit.co/atelierbeibeauty@gmail.com" 
+            method="POST"
+            className="space-y-6"
+          >
+            <input type="hidden" name="_subject" value="New Appointment Booking from Atelier Bei Website" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_template" value="table" />
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <label htmlFor="name" className="block text-sm font-light text-[#3A3A3A] mb-2">
+                  Full Name *
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  className="w-full px-4 py-3 border border-[#3A3A3A]/20 rounded-lg focus:outline-none focus:border-gold transition-colors"
+                  placeholder="Your name"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-sm font-light text-[#3A3A3A] mb-2">
+                  Email Address *
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  className="w-full px-4 py-3 border border-[#3A3A3A]/20 rounded-lg focus:outline-none focus:border-gold transition-colors"
+                  placeholder="your@email.com"
+                />
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <label htmlFor="phone" className="block text-sm font-light text-[#3A3A3A] mb-2">
+                  Phone Number *
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  required
+                  className="w-full px-4 py-3 border border-[#3A3A3A]/20 rounded-lg focus:outline-none focus:border-gold transition-colors"
+                  placeholder="+1 (555) 123-4567"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="service" className="block text-sm font-light text-[#3A3A3A] mb-2">
+                  Service *
+                </label>
+                <select
+                  id="service"
+                  name="service"
+                  required
+                  className="w-full px-4 py-3 border border-[#3A3A3A]/20 rounded-lg focus:outline-none focus:border-gold transition-colors"
+                >
+                  <option value="">Select a service</option>
+                  <option value="Microblading Eyebrows">Microblading Eyebrows</option>
+                  <option value="Touch-up Session">Touch-up Session</option>
+                  <option value="Consultation">Consultation</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="date" className="block text-sm font-light text-[#3A3A3A] mb-2">
+                Preferred Date *
+              </label>
+              <input
+                type="date"
+                id="date"
+                name="preferred_date"
+                required
+                className="w-full px-4 py-3 border border-[#3A3A3A]/20 rounded-lg focus:outline-none focus:border-gold transition-colors"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="message" className="block text-sm font-light text-[#3A3A3A] mb-2">
+                Additional Notes
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                className="w-full px-4 py-3 border border-[#3A3A3A]/20 rounded-lg focus:outline-none focus:border-gold transition-colors resize-none"
+                placeholder="Any special requests or questions..."
+              ></textarea>
+            </div>
+
+            <div className="text-center">
+              <button
+                type="submit"
+                className="px-14 py-5 bg-gold text-white rounded-full font-light tracking-wide text-base
+                         hover:bg-opacity-90 transition-all duration-500 shadow-md hover:shadow-xl"
+              >
+                Submit Booking Request
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </section>
