@@ -73,7 +73,9 @@ const Navbar = ({ scrollY }) => {
             </button>
           </div>
 
-          <button className="hidden md:block px-8 py-2.5 rounded-full text-sm font-light tracking-wide 
+          <button 
+            onClick={() => scrollToSection('booking')}
+            className="hidden md:block px-8 py-2.5 rounded-full text-sm font-light tracking-wide 
                            hover:opacity-80 transition-all duration-500 shadow-sm hover:shadow-md" 
                   style={{ backgroundColor: '#b5945c', color: 'white' }}>
             Book Appointment
@@ -602,7 +604,7 @@ const LocationSection = () => {
 
 const BookingFormSection = () => {
   return (
-    <section className="py-20 bg-blush/20">
+    <section id="booking" className="py-20 bg-blush/20">
       <div className="container mx-auto px-6 lg:px-12">
         <div className="max-w-3xl mx-auto">
           <div className="text-center space-y-4 mb-12">
