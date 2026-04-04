@@ -85,7 +85,7 @@ const Navbar = ({ scrollY }) => {
 
 const HeroSection = ({ scrollY }) => {
   return (
-    <section id="home" className="min-h-screen flex items-start md:items-center justify-center relative overflow-hidden bg-ivory pt-16 md:pt-0">
+    <section id="home" className="relative overflow-hidden bg-ivory pt-16 md:pt-0">
       <div className="absolute top-1/4 -right-32 md:-right-32 -right-20 z-0 opacity-[0.15] md:opacity-[0.15] opacity-[0.08]">
         <video 
           autoPlay 
