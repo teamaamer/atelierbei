@@ -123,7 +123,7 @@ const HeroSection = ({ scrollY }) => {
 
 const AboutSection = () => {
   return (
-    <section id="about" className="py-32 bg-white relative overflow-hidden">
+    <section id="about" className="py-16 md:py-32 bg-white relative overflow-hidden">
       <div className="absolute top-1/4 -right-32 z-0 opacity-[0.08]" style={{ mixBlendMode: 'multiply' }}>
         <video 
           autoPlay 
