@@ -166,9 +166,9 @@ const AboutSection = () => {
 const ServicesSection = () => {
   const features = [
     'Consultation & Design',
-    'Touch-up Sessions',
+    'Color Matching',
     'Aftercare Support',
-    'Color Matching'
+    'Touch-up Sessions'
   ];
 
   return (
@@ -187,11 +187,10 @@ const ServicesSection = () => {
 
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
         <div className="text-center space-y-4 mb-10">
-          <h2 className="text-5xl font-serif font-light text-[#3A3A3A]">Service</h2>
+          <h2 className="text-5xl font-serif font-light text-[#3A3A3A]">Services</h2>
           <div className="w-20 h-px bg-gold mx-auto"></div>
           <p className="text-lg text-[#3A3A3A]/70 font-light leading-relaxed max-w-2xl mx-auto">
-            We specialize in the art of microblading – creating perfectly sculpted, natural-looking 
-            eyebrows that enhance your unique beauty.
+            We specialise in the art of 3D Microblading
           </p>
         </div>
 
@@ -219,7 +218,7 @@ const ServicesSection = () => {
 
               <div className="bg-beige/30 p-8 rounded-lg mt-4">
                 <p className="text-center text-[#3A3A3A]/60 font-light mb-6">
-                  Includes consultation, treatment, and 6-week touch-up session
+                  Includes free consultation, aftercare treatment and 6-8 weeks touch-up session
                 </p>
                 
                 <div className="grid md:grid-cols-2 gap-6">
