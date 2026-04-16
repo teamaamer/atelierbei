@@ -198,7 +198,7 @@ const ServicesSection = () => {
           <div className="bg-white p-8 lg:p-10 rounded-lg shadow-md">
             <div className="space-y-6">
               <div className="text-center space-y-3">
-                <h3 className="text-4xl font-serif font-light text-[#3A3A3A]">Microblading Eyebrows</h3>
+                <h3 className="text-4xl font-serif font-light text-[#3A3A3A]">3D Microblading</h3>
                 <div className="w-16 h-px bg-gold/50 mx-auto"></div>
               </div>
 
@@ -302,7 +302,7 @@ const BeforeAfterSection = () => {
               <img 
                 src={image} 
                 alt={`Before and After ${index + 1}`}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                className="w-full h-full object-cover scale-110 group-hover:scale-115 transition-transform duration-300"
               />
             </div>
           ))}
