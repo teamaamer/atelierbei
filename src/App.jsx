@@ -23,13 +23,11 @@ function App() {
       <BookingFormSection />
       <Footer />
       
-      {/* Floating WhatsApp Button */}
+      {/* Floating SMS Button */}
       <a
-        href="https://wa.me/19496566750"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-8 right-8 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 animate-bounce"
-        aria-label="Contact us on WhatsApp"
+        href="sms:+19496566750"
+        className="fixed bottom-8 right-8 z-50 bg-gold text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 animate-bounce"
+        aria-label="Send us a text message"
       >
         <MessageCircle className="w-6 h-6" />
       </a>
