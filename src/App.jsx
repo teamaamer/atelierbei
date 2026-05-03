@@ -734,10 +734,22 @@ const Footer = () => {
           <div className="space-y-4 text-center md:text-left">
             <h3 className="text-xl font-serif font-light text-[#3A3A3A]">Contact</h3>
             <div className="space-y-2 text-[#3A3A3A]/70 font-light text-sm">
-              <div className="flex items-center gap-2 justify-center md:justify-start">
+              <a 
+                href="tel:+19496566750"
+                onClick={() => {
+                  if (typeof window !== 'undefined' && window.gtag) {
+                    window.gtag('event', 'phone_call', {
+                      event_category: 'contact',
+                      event_label: 'Footer Phone Click',
+                      value: 1
+                    });
+                  }
+                }}
+                className="flex items-center gap-2 justify-center md:justify-start hover:text-gold transition-colors duration-300"
+              >
                 <Phone className="w-4 h-4 text-gold" />
                 <span>(949) 656-6750</span>
-              </div>
+              </a>
               <div className="flex items-center gap-2 justify-center md:justify-start">
                 <Mail className="w-4 h-4 text-gold" />
                 <span>atelierbeibeauty@gmail.com</span>
