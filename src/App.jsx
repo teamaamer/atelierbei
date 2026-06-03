@@ -71,13 +71,13 @@ const Navbar = ({ scrollY }) => {
             </button>
           </div>
 
-          <button 
-            onClick={() => scrollToSection('booking')}
-            className="hidden md:block px-8 py-2.5 rounded-full text-sm font-light tracking-wide 
-                           hover:opacity-80 transition-all duration-500 shadow-sm hover:shadow-md" 
+          <a
+            href="sms:+19496566750"
+            className="hidden md:block px-8 py-2.5 rounded-full text-sm font-light tracking-wide
+                           hover:opacity-80 transition-all duration-500 shadow-sm hover:shadow-md"
                   style={{ backgroundColor: '#b5945c', color: 'white' }}>
             Book Appointment
-          </button>
+          </a>
         </div>
       </div>
     </nav>
