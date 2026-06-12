@@ -244,10 +244,12 @@ const ServicesSection = () => {
               </div>
 
               <div className="text-center pt-2">
-                <button className="px-14 py-5 bg-gold text-white rounded-full font-light tracking-wide text-base
+                <a
+                  href="sms:+19496566750"
+                  className="inline-block px-14 py-5 bg-gold text-white rounded-full font-light tracking-wide text-base
                                  hover:bg-opacity-90 transition-all duration-500 shadow-md hover:shadow-xl">
                   Book Your Appointment
-                </button>
+                </a>
               </div>
             </div>
           </div>
