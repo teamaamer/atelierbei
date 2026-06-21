@@ -230,23 +230,18 @@ const ServicesSection = () => {
               </div>
 
               <div className="text-center pt-12 mt-6 border-t border-gold/15">
-                <div className="inline-flex items-center gap-2 bg-gold/10 text-gold px-5 py-2 rounded-full text-sm font-light tracking-wide mt-8 mb-4">
-                  <span className="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
-                  Limited Time Special Offer
-                </div>
+                <p className="text-base text-[#3A3A3A]/60 font-light mt-8 mb-3 max-w-md mx-auto">
+                  Touch-up session after 4-6 weeks is recommended
+                </p>
+                <div className="text-sm text-[#3A3A3A]/50 font-light mb-1">Investment</div>
+                <div className="text-5xl font-serif font-light text-gold mb-8">$500</div>
 
-                <p className="text-2xl font-serif font-light text-[#3A3A3A] mb-2">
-                  Get your exclusive price
-                </p>
-                <p className="text-base text-[#3A3A3A]/60 font-light mb-8 max-w-md mx-auto">
-                  We're running a special discount for a limited time. Contact us today to find out your exact price.
-                </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <a
                     href="tel:+19496566750"
                     className="w-full sm:w-auto px-10 py-5 bg-gold text-white rounded-full font-light tracking-wide text-base
                                shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-500">
-                    Call for Your Exclusive Price
+                    Book Your Free Consultation
                   </a>
                   <a
                     href="sms:+19496566750"
