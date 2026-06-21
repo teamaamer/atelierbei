@@ -239,10 +239,9 @@ const ServicesSection = () => {
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <a
                     href="tel:+19496566750"
-                    dir="rtl"
-                    className="w-full sm:w-auto px-10 py-5 bg-gold text-white rounded-full font-light tracking-wide text-base
-                               shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-500">
-                    للحصول على العرض الخاص تواصل معي الآن - العرض لفترة محدودة
+                    className="shimmer-btn w-full sm:w-auto px-10 py-5 bg-gold text-white rounded-full font-normal tracking-wide text-base
+                               hover:-translate-y-0.5 transition-all duration-500">
+                    Contact Me Now for the Special Offer — Limited Time
                   </a>
                   <a
                     href="sms:+19496566750"
