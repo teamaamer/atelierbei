@@ -229,27 +229,27 @@ const ServicesSection = () => {
                 </div>
               </div>
 
-              <div className="text-center pt-4">
-                <div className="inline-block relative">
-                  <div className="absolute -top-8 -right-8 bg-gold text-white px-4 py-2 rounded-full text-sm font-light shadow-md transform rotate-12">
-                    60% OFF
-                  </div>
-                  <div className="text-sm text-[#3A3A3A]/50 font-light mb-2">Investment</div>
-                  <div className="flex items-center justify-center gap-4">
-                    <div className="text-3xl font-serif font-light text-[#3A3A3A]/40 line-through">$500</div>
-                    <div className="text-5xl font-serif font-light text-gold">$200</div>
-                  </div>
-                  <div className="text-sm text-gold font-light mt-2">Limited Time Offer</div>
+              <div className="text-center pt-12 mt-6 border-t border-gold/15">
+                <p className="text-2xl font-serif font-light text-[#3A3A3A] mt-8 mb-2">
+                  Ready to transform your brows?
+                </p>
+                <p className="text-base text-[#3A3A3A]/60 font-light mb-8">
+                  Reach out today — we'd love to help you get started.
+                </p>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                  <a
+                    href="tel:+19496566750"
+                    className="w-full sm:w-auto px-10 py-5 bg-gold text-white rounded-full font-light tracking-wide text-base
+                               shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-500">
+                    Book Your Free Consultation
+                  </a>
+                  <a
+                    href="sms:+19496566750"
+                    className="w-full sm:w-auto px-10 py-5 bg-white text-gold border border-gold/40 rounded-full font-light tracking-wide text-base
+                               shadow-md hover:shadow-lg hover:bg-gold/5 hover:-translate-y-0.5 transition-all duration-500">
+                    Send Us a Message
+                  </a>
                 </div>
-              </div>
-
-              <div className="text-center pt-2">
-                <a
-                  href="sms:+19496566750"
-                  className="inline-block px-14 py-5 bg-gold text-white rounded-full font-light tracking-wide text-base
-                                 hover:bg-opacity-90 transition-all duration-500 shadow-md hover:shadow-xl">
-                  Book Your Appointment
-                </a>
               </div>
             </div>
           </div>
