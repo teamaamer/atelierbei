@@ -229,8 +229,8 @@ const ServicesSection = () => {
                 </div>
               </div>
 
-              <div className="text-center pt-12 mt-6 border-t border-gold/15">
-                <p className="text-base text-[#3A3A3A]/60 font-light mt-8 mb-3 max-w-md mx-auto">
+              <div className="text-center pt-6 border-t border-gold/15">
+                <p className="text-base text-[#3A3A3A]/60 font-light mb-3 max-w-md mx-auto">
                   Touch-up session after 4-6 weeks is recommended
                 </p>
                 <div className="text-sm text-[#3A3A3A]/50 font-light mb-1">Investment</div>
@@ -239,9 +239,10 @@ const ServicesSection = () => {
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <a
                     href="tel:+19496566750"
+                    dir="rtl"
                     className="w-full sm:w-auto px-10 py-5 bg-gold text-white rounded-full font-light tracking-wide text-base
                                shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-500">
-                    Book Your Free Consultation
+                    للحصول على العرض الخاص تواصل معي الآن - العرض لفترة محدودة
                   </a>
                   <a
                     href="sms:+19496566750"
