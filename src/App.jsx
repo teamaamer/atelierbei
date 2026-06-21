@@ -166,7 +166,7 @@ const ServicesSection = () => {
     'Consultation & Design',
     'Color Matching',
     'Aftercare Support',
-    'Touch-up Sessions'
+    'Natural-Looking Results'
   ];
 
   return (
@@ -216,7 +216,7 @@ const ServicesSection = () => {
 
               <div className="bg-beige/30 p-8 rounded-lg mt-4">
                 <p className="text-center text-[#3A3A3A]/60 font-light mb-6">
-                  Includes free consultation, aftercare treatment and 6-8 weeks touch-up session
+                  Includes free consultation and aftercare treatment
                 </p>
                 
                 <div className="grid md:grid-cols-2 gap-6">
@@ -230,18 +230,23 @@ const ServicesSection = () => {
               </div>
 
               <div className="text-center pt-12 mt-6 border-t border-gold/15">
-                <p className="text-2xl font-serif font-light text-[#3A3A3A] mt-8 mb-2">
-                  Ready to transform your brows?
+                <div className="inline-flex items-center gap-2 bg-gold/10 text-gold px-5 py-2 rounded-full text-sm font-light tracking-wide mt-8 mb-4">
+                  <span className="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
+                  Limited Time Special Offer
+                </div>
+
+                <p className="text-2xl font-serif font-light text-[#3A3A3A] mb-2">
+                  Get your exclusive price
                 </p>
-                <p className="text-base text-[#3A3A3A]/60 font-light mb-8">
-                  Reach out today — we'd love to help you get started.
+                <p className="text-base text-[#3A3A3A]/60 font-light mb-8 max-w-md mx-auto">
+                  We're running a special discount for a limited time. Contact us today to find out your exact price.
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <a
                     href="tel:+19496566750"
                     className="w-full sm:w-auto px-10 py-5 bg-gold text-white rounded-full font-light tracking-wide text-base
                                shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-500">
-                    Book Your Free Consultation
+                    Call for Your Exclusive Price
                   </a>
                   <a
                     href="sms:+19496566750"
