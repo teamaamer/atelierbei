@@ -234,10 +234,11 @@ const ServicesSection = () => {
                   Touch-up session after 4-6 weeks is recommended
                 </p>
                 <div className="text-sm text-[#3A3A3A]/50 font-light mb-1">Investment</div>
-                <div className="text-5xl font-serif font-light text-gold mb-6">$500</div>
+                <div className="text-5xl font-serif font-light text-[#3A3A3A]/40 line-through mb-2">$500</div>
+                <div className="text-3xl font-serif font-light text-gold mb-5">Save $200</div>
 
-                <p className="text-base text-[#3A3A3A]/60 font-light mb-8 max-w-lg mx-auto">
-                  Contact me today to discuss your needs and find out about any exclusive offers or special promotions.
+                <p className="text-xl md:text-2xl font-semibold text-red-600 mb-8 max-w-lg mx-auto">
+                  Contact me to claim the offer — limited time only!
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
