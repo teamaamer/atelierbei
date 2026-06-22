@@ -235,7 +235,7 @@ const ServicesSection = () => {
                 </p>
                 <div className="text-sm text-[#3A3A3A]/50 font-light mb-1">Investment</div>
                 <div className="text-5xl font-serif font-light text-[#3A3A3A]/40 line-through mb-2">$500</div>
-                <div className="text-3xl font-serif font-light text-gold mb-5">Save $200</div>
+                <div className="text-3xl font-serif font-light text-gold mb-5">Save Up to $200 or More</div>
 
                 <p className="text-xl md:text-2xl font-semibold text-red-600 mb-8 max-w-lg mx-auto">
                   Contact me to claim the offer — limited time only!
