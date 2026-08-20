@@ -87,35 +87,11 @@ const Navbar = ({ scrollY }) => {
 const HeroSection = ({ scrollY }) => {
   return (
     <section id="home" className="relative overflow-hidden bg-ivory pt-16 md:pt-0">
-      <div className="absolute top-1/4 -right-32 md:-right-32 -right-20 z-0 opacity-[0.15] md:opacity-[0.15] opacity-[0.08]">
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-          className="w-[300px] md:w-[500px] h-auto"
-        >
-          <source src="/flowervid.mp4" type="video/mp4" />
-        </video>
-      </div>
-      
-      <div className="absolute top-1/3 -left-32 md:-left-32 -left-20 z-0 opacity-[0.12] md:opacity-[0.12] opacity-[0.06]">
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-          className="w-[250px] md:w-[400px] h-auto transform scale-x-[-1]"
-        >
-          <source src="/flowervid.mp4" type="video/mp4" />
-        </video>
-      </div>
-
       <div className="w-full relative z-10 fade-in-up">
-        <img 
-          src="/herooo.png" 
-          alt="Hero" 
-          className="w-full h-auto object-contain"
+        <img
+          src="/nisreen/cover.jpeg"
+          alt="Hero"
+          className="w-full h-auto object-cover block"
         />
       </div>
     </section>
@@ -138,23 +114,33 @@ const AboutSection = () => {
       </div>
 
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
-        <div className="max-w-3xl mx-auto text-center space-y-8">
-          <div className="space-y-4">
-            <h2 className="text-5xl font-serif font-light text-[#3A3A3A]">About Atelier bei</h2>
-            <div className="w-20 h-px bg-gold mx-auto"></div>
+        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+          <div className="order-1 md:order-1 flex justify-center">
+            <img
+              src="/nisreen/personalnisreen.jpg"
+              alt="Nisreen"
+              className="w-full max-w-sm rounded-lg shadow-md object-cover"
+            />
           </div>
 
-          <p className="text-lg text-[#3A3A3A]/70 font-light leading-relaxed">
-            My journey began with a love for helping others feel confident in their own skin, and today, 
-            I specialize in creating perfectly tailored brows through the art of microblading.
-          </p>
+          <div className="order-2 md:order-2 space-y-8 text-center md:text-left">
+            <div className="space-y-4">
+              <h2 className="text-5xl font-serif font-light text-[#3A3A3A]">About Atelier bei</h2>
+              <div className="w-20 h-px bg-gold mx-auto md:mx-0"></div>
+            </div>
 
-          <p className="text-base text-[#3A3A3A]/60 font-light leading-relaxed">
-            To me, beauty is about balance, detail, and timeless elegance. Every set of brows I design is 
-            approached with precision, artistry, and an understanding of how to enhance each client's natural 
-            features. My mission is to deliver results that are not only flawless and refined, but also 
-            effortlessly natural—brows that elevate your entire look and simplify your daily routine.
-          </p>
+            <p className="text-lg text-[#3A3A3A]/70 font-light leading-relaxed">
+              My journey began with a love for helping others feel confident in their own skin, and today,
+              I specialize in creating perfectly tailored brows through the art of microblading.
+            </p>
+
+            <p className="text-base text-[#3A3A3A]/60 font-light leading-relaxed">
+              To me, beauty is about balance, detail, and timeless elegance. Every set of brows I design is
+              approached with precision, artistry, and an understanding of how to enhance each client's natural
+              features. My mission is to deliver results that are not only flawless and refined, but also
+              effortlessly natural—brows that elevate your entire look and simplify your daily routine.
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -266,14 +252,21 @@ const ServicesSection = () => {
 
 const BeforeAfterSection = () => {
   const results = [
-    '/beforeafter/before after 1.jpg',
+    '/beforeafter/beforeafter1.jpg',
     '/beforeafter/beforeafter2.jpg',
-    '/beforeafter/before after3.jpg',
-    '/beforeafter/baforeafter4.jpg',
-    '/beforeafter/baforeafter5.jpg',
-    '/beforeafter/before after6.jpg',
-    '/beforeafter/beofre after7.jpg',
-    '/beforeafter/beforeafter8.jpg'
+    '/beforeafter/beforeafter3.jpg',
+    '/beforeafter/beforeafter4.jpg',
+    '/beforeafter/beforeafter5.jpg',
+    '/beforeafter/beforeafter6.jpg',
+    '/beforeafter/beforeafter7.jpg',
+    '/beforeafter/beforeafter8.jpg',
+    '/beforeafter/beforeafter9.jpg',
+    '/beforeafter/beforeafter10.jpg',
+    '/beforeafter/beforeafter11.jpg',
+    '/beforeafter/beforeafter12.jpg',
+    '/beforeafter/beforeafter13.jpg',
+    '/beforeafter/beforeafter14.jpg',
+    '/beforeafter/beforeafter15.jpg'
   ];
 
   return (
