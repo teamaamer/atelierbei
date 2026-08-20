@@ -115,7 +115,7 @@ const AboutSection = () => {
 
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <div className="order-1 md:order-1 flex justify-center">
+          <div className="order-2 md:order-1 flex justify-center">
             <img
               src="/nisreen/personalnisreen.jpg"
               alt="Nisreen"
@@ -123,7 +123,7 @@ const AboutSection = () => {
             />
           </div>
 
-          <div className="order-2 md:order-2 space-y-8 text-center md:text-left">
+          <div className="order-1 md:order-2 space-y-8 text-center md:text-left">
             <div className="space-y-4">
               <h2 className="text-5xl font-serif font-light text-[#3A3A3A]">About Atelier bei</h2>
               <div className="w-20 h-px bg-gold mx-auto md:mx-0"></div>
@@ -474,14 +474,26 @@ const BeautyBlogSection = () => {
     <section className="py-32 bg-white">
       <div className="container mx-auto px-6 lg:px-12">
         <div className="text-center space-y-4 mb-20">
-          <h2 className="text-5xl font-serif font-light text-[#3A3A3A]">Beauty Tips & Updates</h2>
+          <h2 className="text-5xl font-serif font-light text-[#3A3A3A]">Latest from Instagram</h2>
           <div className="w-20 h-px bg-gold mx-auto"></div>
           <p className="text-lg text-[#3A3A3A]/70 font-light max-w-2xl mx-auto">
+            Auto-updates with our newest posts
+          </p>
+        </div>
+
+        <div className="max-w-6xl mx-auto mb-24">
+          <div className={`elfsight-app-${elfsightWidgetId}`}></div>
+        </div>
+
+        <div className="text-center space-y-4 mb-16">
+          <h3 className="text-3xl font-serif font-light text-[#3A3A3A]">Beauty Tips & Updates</h3>
+          <div className="w-16 h-px bg-gold mx-auto"></div>
+          <p className="text-[#3A3A3A]/60 font-light max-w-2xl mx-auto">
             Watch our latest videos for expert advice, behind-the-scenes content, and microblading tips
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {youtubeVideos.map((videoId, index) => (
             <div
               key={index}
@@ -509,16 +521,6 @@ const BeautyBlogSection = () => {
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="text-center space-y-4 mb-10">
-          <h3 className="text-3xl font-serif font-light text-[#3A3A3A]">Latest from Instagram</h3>
-          <div className="w-16 h-px bg-gold mx-auto"></div>
-          <p className="text-[#3A3A3A]/60 font-light">Auto-updates with our newest posts</p>
-        </div>
-
-        <div className="max-w-6xl mx-auto">
-          <div className={`elfsight-app-${elfsightWidgetId}`}></div>
         </div>
 
         <div className="text-center mt-12">
