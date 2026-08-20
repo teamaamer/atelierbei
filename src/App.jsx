@@ -25,7 +25,7 @@ function App() {
       
       {/* Floating SMS Button */}
       <a
-        href="sms:+19496566750"
+        href="sms:+17146514892"
         className="fixed bottom-8 right-8 z-50 bg-gold text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 animate-bounce"
         aria-label="Send us a text message"
       >
@@ -72,7 +72,7 @@ const Navbar = ({ scrollY }) => {
           </div>
 
           <a
-            href="sms:+19496566750"
+            href="sms:+17146514892"
             className="hidden md:block px-8 py-2.5 rounded-full text-sm font-light tracking-wide
                            hover:opacity-80 transition-all duration-500 shadow-sm hover:shadow-md"
                   style={{ backgroundColor: '#b5945c', color: 'white' }}>
@@ -229,13 +229,13 @@ const ServicesSection = () => {
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <a
-                    href="tel:+19496566750"
+                    href="tel:+17146514892"
                     className="shimmer-btn w-full sm:w-auto px-10 py-5 bg-gold text-white rounded-full font-normal tracking-wide text-base
                                hover:-translate-y-0.5 transition-all duration-500">
                     Contact Me Now for the Special Offer — Limited Time
                   </a>
                   <a
-                    href="sms:+19496566750"
+                    href="sms:+17146514892"
                     className="w-full sm:w-auto px-10 py-5 bg-white text-gold border border-gold/40 rounded-full font-light tracking-wide text-base
                                shadow-md hover:shadow-lg hover:bg-gold/5 hover:-translate-y-0.5 transition-all duration-500">
                     Send Us a Message
@@ -741,7 +741,7 @@ const Footer = () => {
             <h3 className="text-xl font-serif font-light text-[#3A3A3A]">Contact</h3>
             <div className="space-y-2 text-[#3A3A3A]/70 font-light text-sm">
               <a 
-                href="tel:+19496566750"
+                href="tel:+17146514892"
                 onClick={() => {
                   if (typeof window !== 'undefined' && window.gtag) {
                     window.gtag('event', 'phone_call', {
@@ -754,7 +754,7 @@ const Footer = () => {
                 className="flex items-center gap-2 justify-center md:justify-start hover:text-gold transition-colors duration-300"
               >
                 <Phone className="w-4 h-4 text-gold" />
-                <span>(949) 656-6750</span>
+                <span>(714) 651-4892</span>
               </a>
               <div className="flex items-center gap-2 justify-center md:justify-start">
                 <Mail className="w-4 h-4 text-gold" />
