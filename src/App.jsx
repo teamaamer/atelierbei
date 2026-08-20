@@ -467,20 +467,8 @@ const BeautyBlogSection = () => {
     'T2OIjFunlxw'
   ];
 
-  const reels = [
-    {
-      url: 'https://www.instagram.com/reel/DWrbXWGgIM6/',
-      embedUrl: 'https://www.instagram.com/reel/DWrbXWGgIM6/embed'
-    },
-    {
-      url: 'https://www.instagram.com/reel/DWhBuVRAEDA/',
-      embedUrl: 'https://www.instagram.com/reel/DWhBuVRAEDA/embed'
-    },
-    {
-      url: 'https://www.instagram.com/reel/DWO6I9plNzP/',
-      embedUrl: 'https://www.instagram.com/reel/DWO6I9plNzP/embed'
-    }
-  ];
+  // Elfsight Instagram widget ID
+  const elfsightWidgetId = '071dce93-0b23-422c-8801-1d6102ec28b8';
 
   return (
     <section className="py-32 bg-white">
@@ -493,7 +481,7 @@ const BeautyBlogSection = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-12">
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
           {youtubeVideos.map((videoId, index) => (
             <div
               key={index}
@@ -523,39 +511,18 @@ const BeautyBlogSection = () => {
           ))}
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {reels.map((reel, index) => (
-            <div 
-              key={index}
-              className="bg-beige/20 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300"
-            >
-              <div className="aspect-[9/16] relative">
-                <iframe
-                  src={reel.embedUrl}
-                  className="w-full h-full"
-                  frameBorder="0"
-                  scrolling="no"
-                  allowTransparency="true"
-                  allow="encrypted-media"
-                ></iframe>
-              </div>
-              <div className="p-4 text-center">
-                <a 
-                  href={reel.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gold hover:text-[#3A3A3A] transition-colors duration-300 font-light text-sm inline-flex items-center gap-2"
-                >
-                  View on Instagram
-                  <Instagram className="w-4 h-4" />
-                </a>
-              </div>
-            </div>
-          ))}
+        <div className="text-center space-y-4 mb-10">
+          <h3 className="text-3xl font-serif font-light text-[#3A3A3A]">Latest from Instagram</h3>
+          <div className="w-16 h-px bg-gold mx-auto"></div>
+          <p className="text-[#3A3A3A]/60 font-light">Auto-updates with our newest posts</p>
+        </div>
+
+        <div className="max-w-6xl mx-auto">
+          <div className={`elfsight-app-${elfsightWidgetId}`}></div>
         </div>
 
         <div className="text-center mt-12">
-          <a 
+          <a
             href="https://www.instagram.com/atelierbei/"
             target="_blank"
             rel="noopener noreferrer"
