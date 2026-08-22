@@ -259,7 +259,6 @@ const BeforeAfterSection = () => {
     '/beforeafter/beforeafter5.jpg',
     '/beforeafter/beforeafter6.jpg',
     '/beforeafter/beforeafter7.jpg',
-    '/beforeafter/beforeafter8.jpg',
     '/beforeafter/beforeafter9.jpg',
     '/beforeafter/beforeafter10.jpg',
     '/beforeafter/beforeafter11.jpg',
