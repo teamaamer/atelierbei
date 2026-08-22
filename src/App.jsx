@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Star, Instagram, MapPin, Phone, Mail, ChevronLeft, ChevronRight, Facebook, MessageCircle, Youtube } from 'lucide-react';
+import { Star, Instagram, MapPin, Phone, Mail, ChevronLeft, ChevronRight, Facebook, MessageCircle } from 'lucide-react';
 
 function App() {
   const [scrollY, setScrollY] = useState(0);
@@ -458,15 +458,6 @@ const ReviewsSection = () => {
 };
 
 const BeautyBlogSection = () => {
-  const youtubeVideos = [
-    'PJhtVq8v4Bs',
-    'Zv0ti8bV820',
-    'k5GDR4caNIQ',
-    '0hKfdX5_juA',
-    'cDCVsPIH1eU',
-    'T2OIjFunlxw'
-  ];
-
   // Elfsight Instagram widget ID
   const elfsightWidgetId = '071dce93-0b23-422c-8801-1d6102ec28b8';
 
@@ -481,46 +472,8 @@ const BeautyBlogSection = () => {
           </p>
         </div>
 
-        <div className="max-w-6xl mx-auto mb-24">
+        <div className="max-w-6xl mx-auto mb-12">
           <div className={`elfsight-app-${elfsightWidgetId}`}></div>
-        </div>
-
-        <div className="text-center space-y-4 mb-16">
-          <h3 className="text-3xl font-serif font-light text-[#3A3A3A]">Beauty Tips & Updates</h3>
-          <div className="w-16 h-px bg-gold mx-auto"></div>
-          <p className="text-[#3A3A3A]/60 font-light max-w-2xl mx-auto">
-            Watch our latest videos for expert advice, behind-the-scenes content, and microblading tips
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {youtubeVideos.map((videoId, index) => (
-            <div
-              key={index}
-              className="bg-beige/20 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300"
-            >
-              <div className="aspect-[9/16] relative">
-                <iframe
-                  src={`https://www.youtube.com/embed/${videoId}`}
-                  className="w-full h-full"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-              </div>
-              <div className="p-4 text-center">
-                <a
-                  href={`https://www.youtube.com/watch?v=${videoId}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gold hover:text-[#3A3A3A] transition-colors duration-300 font-light text-sm inline-flex items-center gap-2"
-                >
-                  Watch on YouTube
-                  <Youtube className="w-4 h-4" />
-                </a>
-              </div>
-            </div>
-          ))}
         </div>
 
         <div className="text-center mt-12">
