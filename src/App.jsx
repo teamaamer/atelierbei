@@ -515,7 +515,7 @@ const BeautyBlogSection = () => {
 
 const LocationSection = () => {
   return (
-    <section className="py-32 bg-ivory">
+    <section id="contact" className="py-32 bg-ivory">
       <div className="container mx-auto px-6 lg:px-12">
         <div className="text-center space-y-4 mb-20">
           <h2 className="text-5xl font-serif font-light text-[#3A3A3A]">Visit Us</h2>
