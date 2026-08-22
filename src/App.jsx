@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Star, Instagram, MapPin, Phone, Mail, ChevronLeft, ChevronRight, Facebook, MessageCircle } from 'lucide-react';
 
+// Lightweight client-side router (pathname based). Netlify catch-all serves index.html.
+const navigate = (path) => {
+  if (typeof window === 'undefined') return;
+  window.history.pushState({}, '', path);
+  window.dispatchEvent(new PopStateEvent('popstate'));
+  window.scrollTo(0, 0);
+};
+
 function App() {
   const [scrollY, setScrollY] = useState(0);
+  const [route, setRoute] = useState(typeof window !== 'undefined' ? window.location.pathname : '/');
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -10,19 +19,36 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handlePop = () => {
+      setRoute(window.location.pathname);
+      window.scrollTo(0, 0);
+    };
+    window.addEventListener('popstate', handlePop);
+    return () => window.removeEventListener('popstate', handlePop);
+  }, []);
+
+  const isBookingRoute = route === '/book' || route === '/book-appointment';
+
   return (
     <div className="min-h-screen bg-ivory">
-      <Navbar scrollY={scrollY} />
-      <HeroSection scrollY={scrollY} />
-      <AboutSection />
-      <ServicesSection />
-      <BeforeAfterSection />
-      <ReviewsSection />
-      <BeautyBlogSection />
-      <LocationSection />
-      <BookingFormSection />
+      <Navbar scrollY={scrollY} onNavigate={navigate} />
+      {isBookingRoute ? (
+        <BookingPage />
+      ) : (
+        <>
+          <HeroSection scrollY={scrollY} />
+          <AboutSection />
+          <ServicesSection onNavigate={navigate} />
+          <BeforeAfterSection />
+          <ReviewsSection />
+          <BeautyBlogSection />
+          <LocationSection />
+          <BookingCTASection onNavigate={navigate} />
+        </>
+      )}
       <Footer />
-      
+
       {/* Floating SMS Button */}
       <a
         href="sms:+17146514892"
@@ -35,15 +61,31 @@ function App() {
   );
 }
 
-const Navbar = ({ scrollY }) => {
+const Navbar = ({ scrollY, onNavigate }) => {
   const isScrolled = scrollY > 50;
-  
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+
+  const goHome = (sectionId) => {
+    if (window.location.pathname !== '/') {
+      onNavigate('/');
+      // wait for home to render, then scroll
+      setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 80);
+    } else {
+      const el = document.getElementById(sectionId);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  const navItems = [
+    { label: 'Home', id: 'home' },
+    { label: 'About', id: 'about' },
+    { label: 'Services', id: 'services' },
+    { label: 'Results', id: 'results' },
+    { label: 'Reviews', id: 'reviews' },
+    { label: 'Contact', id: 'contact' }
+  ];
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md" style={{ backgroundColor: 'rgba(243, 239, 235, 0.95)' }}>
@@ -51,33 +93,26 @@ const Navbar = ({ scrollY }) => {
         <div className="flex items-center justify-center md:justify-between h-16">
 
           <div className="flex items-center space-x-4 md:space-x-12 flex-1 justify-center overflow-x-auto">
-            <button onClick={() => scrollToSection('home')} className="text-xs md:text-sm font-light hover:opacity-70 transition-all duration-300 whitespace-nowrap" style={{ color: '#b5945c' }}>
-              Home
-            </button>
-            <button onClick={() => scrollToSection('about')} className="text-xs md:text-sm font-light hover:opacity-70 transition-all duration-300 whitespace-nowrap" style={{ color: '#b5945c' }}>
-              About
-            </button>
-            <button onClick={() => scrollToSection('services')} className="text-xs md:text-sm font-light hover:opacity-70 transition-all duration-300 whitespace-nowrap" style={{ color: '#b5945c' }}>
-              Services
-            </button>
-            <button onClick={() => scrollToSection('results')} className="text-xs md:text-sm font-light hover:opacity-70 transition-all duration-300 whitespace-nowrap" style={{ color: '#b5945c' }}>
-              Results
-            </button>
-            <button onClick={() => scrollToSection('reviews')} className="text-xs md:text-sm font-light hover:opacity-70 transition-all duration-300 whitespace-nowrap" style={{ color: '#b5945c' }}>
-              Reviews
-            </button>
-            <button onClick={() => scrollToSection('contact')} className="text-xs md:text-sm font-light hover:opacity-70 transition-all duration-300 whitespace-nowrap" style={{ color: '#b5945c' }}>
-              Contact
-            </button>
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => goHome(item.id)}
+                className="text-xs md:text-sm font-light hover:opacity-70 transition-all duration-300 whitespace-nowrap"
+                style={{ color: '#b5945c' }}
+              >
+                {item.label}
+              </button>
+            ))}
           </div>
 
-          <a
-            href="sms:+17146514892"
+          <button
+            onClick={() => onNavigate('/book')}
             className="hidden md:block px-8 py-2.5 rounded-full text-sm font-light tracking-wide
-                           hover:opacity-80 transition-all duration-500 shadow-sm hover:shadow-md"
-                  style={{ backgroundColor: '#b5945c', color: 'white' }}>
+                       hover:opacity-80 transition-all duration-500 shadow-sm hover:shadow-md"
+            style={{ backgroundColor: '#b5945c', color: 'white' }}
+          >
             Book Appointment
-          </a>
+          </button>
         </div>
       </div>
     </nav>
@@ -147,7 +182,7 @@ const AboutSection = () => {
   );
 };
 
-const ServicesSection = () => {
+const ServicesSection = ({ onNavigate }) => {
   const features = [
     'Consultation & Design',
     'Color Matching',
@@ -234,6 +269,12 @@ const ServicesSection = () => {
                                hover:-translate-y-0.5 transition-all duration-500">
                     Contact Me Now for the Special Offer — Limited Time
                   </a>
+                  <button
+                    onClick={() => onNavigate('/book')}
+                    className="w-full sm:w-auto px-10 py-5 bg-[#3A3A3A] text-white rounded-full font-light tracking-wide text-base
+                               shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-500">
+                    Book Your Appointment
+                  </button>
                   <a
                     href="sms:+17146514892"
                     className="w-full sm:w-auto px-10 py-5 bg-white text-gold border border-gold/40 rounded-full font-light tracking-wide text-base
@@ -580,127 +621,72 @@ const LocationSection = () => {
   );
 };
 
-const BookingFormSection = () => {
+const BookingCTASection = ({ onNavigate }) => {
   return (
-    <section id="booking" className="py-20 bg-blush/20">
+    <section id="booking" className="py-24 bg-blush/20">
       <div className="container mx-auto px-6 lg:px-12">
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center space-y-4 mb-12">
+        <div className="max-w-3xl mx-auto text-center space-y-8">
+          <div className="space-y-4">
             <h2 className="text-5xl font-serif font-light text-[#3A3A3A]">Book an Appointment</h2>
             <div className="w-20 h-px bg-gold mx-auto"></div>
-            <p className="text-lg text-[#3A3A3A]/70 font-light">
-              Fill out the form below and we'll get back to you shortly to confirm your appointment
+            <p className="text-lg text-[#3A3A3A]/70 font-light leading-relaxed">
+              Choose the service, date, and time that works best for you. Reserve your spot instantly
+              with our online booking calendar.
             </p>
           </div>
 
-          <form 
-            action="https://formsubmit.co/atelierbeibeauty@gmail.com" 
-            method="POST"
-            className="space-y-6"
+          <button
+            onClick={() => onNavigate('/book')}
+            className="px-14 py-5 bg-gold text-white rounded-full font-light tracking-wide text-base
+                       hover:bg-opacity-90 transition-all duration-500 shadow-md hover:shadow-xl hover:-translate-y-0.5"
           >
-            <input type="hidden" name="_subject" value="New Appointment Booking from Atelier Bei Website" />
-            <input type="hidden" name="_captcha" value="false" />
-            <input type="hidden" name="_template" value="table" />
-            
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-light text-[#3A3A3A] mb-2">
-                  Full Name *
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                  className="w-full px-4 py-3 border border-[#3A3A3A]/20 rounded-lg focus:outline-none focus:border-gold transition-colors"
-                  placeholder="Your name"
-                />
-              </div>
+            Book Your Appointment
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+};
 
-              <div>
-                <label htmlFor="email" className="block text-sm font-light text-[#3A3A3A] mb-2">
-                  Email Address *
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  className="w-full px-4 py-3 border border-[#3A3A3A]/20 rounded-lg focus:outline-none focus:border-gold transition-colors"
-                  placeholder="your@email.com"
-                />
-              </div>
+const BookingPage = () => {
+  // Load the 255 form_embed.js script once when the booking page mounts.
+  useEffect(() => {
+    const existing = document.querySelector('script[src="https://api.255adv.com/js/form_embed.js"]');
+    if (existing) return;
+    const script = document.createElement('script');
+    script.src = 'https://api.255adv.com/js/form_embed.js';
+    script.type = 'text/javascript';
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      // leave the script in place; it is harmless if navigated back to
+    };
+  }, []);
+
+  return (
+    <section id="book" className="pt-24 pb-24 bg-ivory min-h-screen">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center space-y-4 mb-10">
+            <h2 className="text-4xl md:text-5xl font-serif font-light text-[#3A3A3A]">Book Your Appointment</h2>
+            <div className="w-20 h-px bg-gold mx-auto"></div>
+            <p className="text-lg text-[#3A3A3A]/70 font-light">
+              Choose the service, date, and time that works best for you.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 lg:p-8">
+            <div className="w-full" style={{ minHeight: '700px' }}>
+              <iframe
+                src="https://api.255adv.com/widget/booking/lCu5PqaaOPcSQFhDgD4P"
+                allow="payment"
+                title="Book Your Appointment"
+                style={{ width: '100%', border: 'none', overflow: 'hidden', minHeight: '700px', display: 'block' }}
+                scrolling="no"
+                id="lCu5PqaaOPcSQFhDgD4P_1787406338282"
+              ></iframe>
             </div>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="phone" className="block text-sm font-light text-[#3A3A3A] mb-2">
-                  Phone Number *
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  required
-                  className="w-full px-4 py-3 border border-[#3A3A3A]/20 rounded-lg focus:outline-none focus:border-gold transition-colors"
-                  placeholder="+1 (555) 123-4567"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="service" className="block text-sm font-light text-[#3A3A3A] mb-2">
-                  Service *
-                </label>
-                <select
-                  id="service"
-                  name="service"
-                  required
-                  className="w-full px-4 py-3 border border-[#3A3A3A]/20 rounded-lg focus:outline-none focus:border-gold transition-colors"
-                >
-                  <option value="">Select a service</option>
-                  <option value="Microblading Eyebrows">Microblading Eyebrows</option>
-                  <option value="Touch-up Session">Touch-up Session</option>
-                  <option value="Consultation">Consultation</option>
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="date" className="block text-sm font-light text-[#3A3A3A] mb-2">
-                Preferred Date *
-              </label>
-              <input
-                type="date"
-                id="date"
-                name="preferred_date"
-                required
-                className="w-full px-4 py-3 border border-[#3A3A3A]/20 rounded-lg focus:outline-none focus:border-gold transition-colors"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="message" className="block text-sm font-light text-[#3A3A3A] mb-2">
-                Additional Notes
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                rows="4"
-                className="w-full px-4 py-3 border border-[#3A3A3A]/20 rounded-lg focus:outline-none focus:border-gold transition-colors resize-none"
-                placeholder="Any special requests or questions..."
-              ></textarea>
-            </div>
-
-            <div className="text-center">
-              <button
-                type="submit"
-                className="px-14 py-5 bg-gold text-white rounded-full font-light tracking-wide text-base
-                         hover:bg-opacity-90 transition-all duration-500 shadow-md hover:shadow-xl"
-              >
-                Submit Booking Request
-              </button>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </section>
