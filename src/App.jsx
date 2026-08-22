@@ -348,6 +348,27 @@ const ReviewsSection = () => {
       review: 'Excellent work and very professional!',
       image: '/reviews/Shatha.png',
       timeAgo: '2 weeks ago'
+    },
+    {
+      name: 'Nora Perez',
+      rating: 5,
+      review: 'Really happy with my eyebrow microblading results. The shape came out natural and balanced, and the whole process was smooth and professional. Nesreen paid attention to detail and made sure I was comfortable the entire time. Definitely recommend if you\u2019re looking for soft, natural looking brows.',
+      image: '/reviews/Nora Perez.png',
+      timeAgo: '2 weeks ago'
+    },
+    {
+      name: 'Hala Alkhatib',
+      rating: 5,
+      review: 'I did microblading with Nasreen, and she was amazing. She did such a good job, was super professional, and so sweet. I would definitely recommend her to anyone looking to get microblading for their eyebrows.',
+      image: '/reviews/halna.png',
+      timeAgo: '2 weeks ago'
+    },
+    {
+      name: 'Hala Alkhatib',
+      rating: 5,
+      review: 'I had the best experience getting my eyebrows done by Nesrin at Atelier Bei. She is incredibly talented and really knows how to shape brows perfectly to suit your face. She takes her time, pays attention to every detail, and makes sure you\u2019re comfortable the whole time. My brows have never looked this clean, natural, and perfectly shaped. You can tell she truly cares about her work and her clients. I\u2019m honestly so happy with the results and will definitely keep going back. Highly recommend Nesrin at Atelier Bei if you want flawless eyebrows!',
+      image: '/reviews/Hala Alkhatib.png',
+      timeAgo: '2 weeks ago'
     }
   ];
 
