@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Star, Instagram, MapPin, Phone, Mail, ChevronLeft, ChevronRight, Facebook, MessageCircle } from 'lucide-react';
+import { Star, Instagram, MapPin, Phone, Mail, ChevronLeft, ChevronRight, Facebook, MessageCircle, Menu, X } from 'lucide-react';
 
 // Lightweight client-side router (pathname based). Netlify catch-all serves index.html.
 const navigate = (path) => {
@@ -64,8 +64,10 @@ function App() {
 
 const Navbar = ({ scrollY, onNavigate }) => {
   const isScrolled = scrollY > 50;
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const goHome = (sectionId) => {
+    setMobileOpen(false);
     if (window.location.pathname !== '/') {
       onNavigate('/');
       // wait for home to render, then scroll
@@ -89,43 +91,92 @@ const Navbar = ({ scrollY, onNavigate }) => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md" style={{ backgroundColor: 'rgba(243, 239, 235, 0.95)' }}>
-      <div className="container mx-auto px-4 lg:px-12">
-        <div className="flex items-center justify-between h-16">
+    <>
+      <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md" style={{ backgroundColor: 'rgba(243, 239, 235, 0.95)' }}>
+        <div className="mx-auto px-5 lg:px-12">
+          <div className="flex items-center justify-between" style={{ height: '72px' }}>
 
-          <div className="flex items-center flex-shrink-0">
-            <img
-              src="/logo.png"
-              alt="Atelier Bei"
-              className="h-16 md:h-20 w-auto object-contain"
-              style={{ transform: 'scale(1.6)', transformOrigin: 'left center' }}
-            />
+            {/* Logo */}
+            <div className="flex items-center flex-shrink-0">
+              <img
+                src="/logo.png"
+                alt="Atelier Bei"
+                className="h-16 md:h-20 w-auto object-contain"
+                style={{ transform: 'scale(1.6)', transformOrigin: 'left center' }}
+              />
+            </div>
+
+            {/* Desktop nav links */}
+            <div className="hidden md:flex items-center space-x-10 flex-1 justify-center">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => goHome(item.id)}
+                  className="text-sm md:text-base font-normal hover:opacity-70 transition-all duration-300 whitespace-nowrap tracking-wide"
+                  style={{ color: '#3F4937' }}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Desktop CTA */}
+            <a
+              href="sms:+17146514892"
+              className="hidden md:block px-8 py-2.5 rounded-full text-sm font-light tracking-wide
+                         hover:opacity-80 transition-all duration-500 shadow-sm hover:shadow-md no-underline flex-shrink-0"
+              style={{ backgroundColor: '#b5945c', color: 'white' }}
+            >
+              Book Appointment
+            </a>
+
+            {/* Mobile hamburger */}
+            <button
+              onClick={() => setMobileOpen((prev) => !prev)}
+              className="md:hidden flex items-center justify-center flex-shrink-0"
+              style={{ color: '#3F4937' }}
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+            </button>
           </div>
+        </div>
+      </nav>
 
-          <div className="flex items-center space-x-4 md:space-x-10 flex-1 justify-center overflow-x-auto">
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <div
+          className="md:hidden fixed top-0 left-0 right-0 z-40 pt-[72px] pb-8 px-5 shadow-lg"
+          style={{
+            backgroundColor: 'rgba(243, 239, 235, 0.98)',
+            backdropFilter: 'blur(8px)',
+            animation: 'fadeInUp 0.3s ease-out forwards'
+          }}
+        >
+          <div className="flex flex-col space-y-1">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => goHome(item.id)}
-                className="text-sm md:text-base font-normal hover:opacity-70 transition-all duration-300 whitespace-nowrap tracking-wide"
+                className="text-left py-4 text-lg font-light tracking-wide transition-all duration-300 hover:opacity-70"
                 style={{ color: '#3F4937' }}
               >
                 {item.label}
               </button>
             ))}
+            <a
+              href="sms:+17146514892"
+              onClick={() => setMobileOpen(false)}
+              className="mt-4 inline-block text-center px-8 py-4 rounded-full text-base font-light tracking-wide no-underline
+                         hover:opacity-80 transition-all duration-500 shadow-sm"
+              style={{ backgroundColor: '#b5945c', color: 'white' }}
+            >
+              Book Appointment
+            </a>
           </div>
-
-          <a
-            href="sms:+17146514892"
-            className="hidden md:block px-8 py-2.5 rounded-full text-sm font-light tracking-wide
-                       hover:opacity-80 transition-all duration-500 shadow-sm hover:shadow-md no-underline flex-shrink-0"
-            style={{ backgroundColor: '#b5945c', color: 'white' }}
-          >
-            Book Appointment
-          </a>
         </div>
-      </div>
-    </nav>
+      )}
+    </>
   );
 };
 
