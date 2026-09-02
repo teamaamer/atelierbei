@@ -400,6 +400,9 @@ const ReviewsSection = () => {
   // master screenshots — kept per instructions. Iman Issa & Dima Hamdan updated to the
   // fuller text from the master list. Briana Lopez & velda alessa are rating-only
   // (no text visible in screenshots — no text invented).
+  const REVIEWS_PER_ROW = 4;
+  const [currentRowIndex, setCurrentRowIndex] = React.useState(0);
+
   const reviews = [
     {
       name: 'Iman Issa',
@@ -529,6 +532,20 @@ const ReviewsSection = () => {
     }
   ];
 
+  const totalRows = Math.ceil(reviews.length / REVIEWS_PER_ROW);
+  const currentRow = reviews.slice(
+    currentRowIndex * REVIEWS_PER_ROW,
+    currentRowIndex * REVIEWS_PER_ROW + REVIEWS_PER_ROW
+  );
+
+  React.useEffect(() => {
+    if (totalRows <= 1) return;
+    const timer = setInterval(() => {
+      setCurrentRowIndex((prev) => (prev + 1) % totalRows);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [totalRows]);
+
   return (
     <section id="reviews" className="py-32 bg-beige/30 relative overflow-hidden">
       <div className="container mx-auto px-6 lg:px-12">
@@ -538,10 +555,25 @@ const ReviewsSection = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-          {reviews.map((review, index) => (
-            <ReviewCard key={index} review={review} />
+          {currentRow.map((review, index) => (
+            <ReviewCard key={`${currentRowIndex}-${index}`} review={review} />
           ))}
         </div>
+
+        {totalRows > 1 && (
+          <div className="flex justify-center gap-2 mt-10">
+            {Array.from({ length: totalRows }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentRowIndex(index)}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  currentRowIndex === index ? 'bg-gold w-8' : 'bg-gold/30 w-2'
+                }`}
+                aria-label={`Reviews page ${index + 1}`}
+              />
+            ))}
+          </div>
+        )}
 
         <div className="text-center mt-12">
           <a 
