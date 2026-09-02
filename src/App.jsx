@@ -97,22 +97,22 @@ const Navbar = ({ scrollY, onNavigate }) => {
               <button
                 key={item.id}
                 onClick={() => goHome(item.id)}
-                className="text-xs md:text-sm font-light hover:opacity-70 transition-all duration-300 whitespace-nowrap"
-                style={{ color: '#b5945c' }}
+                className="text-sm md:text-base font-normal hover:opacity-70 transition-all duration-300 whitespace-nowrap tracking-wide"
+                style={{ color: '#3F4937' }}
               >
                 {item.label}
               </button>
             ))}
           </div>
 
-          <button
-            onClick={() => onNavigate('/book')}
+          <a
+            href="sms:NEW_PHONE_NUMBER"
             className="hidden md:block px-8 py-2.5 rounded-full text-sm font-light tracking-wide
-                       hover:opacity-80 transition-all duration-500 shadow-sm hover:shadow-md"
+                       hover:opacity-80 transition-all duration-500 shadow-sm hover:shadow-md no-underline"
             style={{ backgroundColor: '#b5945c', color: 'white' }}
           >
             Book Appointment
-          </button>
+          </a>
         </div>
       </div>
     </nav>
@@ -121,12 +121,38 @@ const Navbar = ({ scrollY, onNavigate }) => {
 
 const HeroSection = ({ scrollY }) => {
   return (
-    <section id="home" className="relative overflow-hidden bg-ivory pt-16 md:pt-0">
-      <div className="w-full relative z-10 fade-in-up">
+    <section
+      id="home"
+      className="relative w-full overflow-hidden bg-black"
+      style={{ height: '88vh' }}
+    >
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src="/ATHERO.MOV" type="video/quicktime" />
+      </video>
+
+      {/* Subtle dark overlay/gradient to keep logo & navbar readable */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.12) 35%, rgba(0,0,0,0.05) 60%, rgba(0,0,0,0.25) 100%)'
+        }}
+      />
+
+      {/* Atelier Bei logo - top-right, aligned under navbar */}
+      <div className="absolute top-0 right-0 z-10 pr-5 md:pr-12 pt-24 md:pt-28 pointer-events-none">
         <img
-          src="/nisreen/cover.jpeg"
-          alt="Hero"
-          className="w-full h-auto object-cover block"
+          src="/logo.png"
+          alt="Atelier Bei"
+          className="w-16 md:w-28 h-auto object-contain"
+          style={{ filter: 'drop-shadow(0 2px 10px rgba(0,0,0,0.45))' }}
         />
       </div>
     </section>
