@@ -69,6 +69,13 @@ h1, h2, h3, h4, h5, h6 {
   animation: fadeInUp 1.2s ease-out forwards;
 }
 
+.review-clamp {
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .float-animation {
   animation: float 6s ease-in-out infinite;
 }

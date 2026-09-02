@@ -40,11 +40,12 @@ function App() {
           <HeroSection scrollY={scrollY} />
           <AboutSection />
           <ServicesSection onNavigate={navigate} />
+          <HeroImageSection />
           <BeforeAfterSection />
           <ReviewsSection />
           <BeautyBlogSection />
           <LocationSection />
-          <BookingCTASection onNavigate={navigate} />
+          <BookingCTASection />
         </>
       )}
       <Footer />
@@ -106,7 +107,7 @@ const Navbar = ({ scrollY, onNavigate }) => {
           </div>
 
           <a
-            href="sms:NEW_PHONE_NUMBER"
+            href="sms:+17146514892"
             className="hidden md:block px-8 py-2.5 rounded-full text-sm font-light tracking-wide
                        hover:opacity-80 transition-all duration-500 shadow-sm hover:shadow-md no-underline"
             style={{ backgroundColor: '#b5945c', color: 'white' }}
@@ -134,6 +135,7 @@ const HeroSection = ({ scrollY }) => {
         preload="auto"
         className="absolute inset-0 w-full h-full object-cover"
       >
+        <source src="/ATHERO.mp4" type="video/mp4" />
         <source src="/ATHERO.MOV" type="video/quicktime" />
       </video>
 
@@ -153,6 +155,20 @@ const HeroSection = ({ scrollY }) => {
           alt="Atelier Bei"
           className="w-16 md:w-28 h-auto object-contain"
           style={{ filter: 'drop-shadow(0 2px 10px rgba(0,0,0,0.45))' }}
+        />
+      </div>
+    </section>
+  );
+};
+
+const HeroImageSection = () => {
+  return (
+    <section className="w-full bg-ivory py-12 md:py-20">
+      <div className="w-full fade-in-up">
+        <img
+          src="/nisreen/cover.jpeg"
+          alt="Atelier Bei"
+          className="w-full h-auto object-cover block"
         />
       </div>
     </section>
@@ -290,22 +306,22 @@ const ServicesSection = ({ onNavigate }) => {
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <a
-                    href="tel:+17146514892"
-                    className="shimmer-btn w-full sm:w-auto px-10 py-5 bg-gold text-white rounded-full font-normal tracking-wide text-base
-                               hover:-translate-y-0.5 transition-all duration-500">
-                    Contact Me Now for the Special Offer — Limited Time
-                  </a>
-                  <button
-                    onClick={() => onNavigate('/book')}
-                    className="w-full sm:w-auto px-10 py-5 bg-[#3A3A3A] text-white rounded-full font-light tracking-wide text-base
-                               shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-500">
-                    Book Your Appointment
-                  </button>
-                  <a
                     href="sms:+17146514892"
-                    className="w-full sm:w-auto px-10 py-5 bg-white text-gold border border-gold/40 rounded-full font-light tracking-wide text-base
-                               shadow-md hover:shadow-lg hover:bg-gold/5 hover:-translate-y-0.5 transition-all duration-500">
-                    Send Us a Message
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-12 py-5 rounded-full font-light tracking-wide text-base text-white
+                               shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-500 no-underline"
+                    style={{ backgroundColor: '#46513D' }}
+                  >
+                    <MessageCircle className="w-5 h-5" />
+                    Send SMS
+                  </a>
+                  <a
+                    href="tel:+17146514892"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-12 py-5 rounded-full font-light tracking-wide text-base text-white
+                               shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-500 no-underline"
+                    style={{ backgroundColor: '#46513D' }}
+                  >
+                    <Phone className="w-5 h-5" />
+                    Call Now
                   </a>
                 </div>
               </div>
@@ -377,29 +393,36 @@ const BeforeAfterSection = () => {
 };
 
 const ReviewsSection = () => {
-  const [currentSlide, setCurrentSlide] = React.useState(0);
-  
+  // Audit summary:
+  // Existing reviews found: 8
+  // New unique reviews added: 10
+  // Duplicates prevented: 0 (all master entries either matched existing or were new)
+  // Final unique reviews: 18
+  // Notes: Sima & Shatha Naneesh are legitimate existing reviews not in the supplied
+  // master screenshots — kept per instructions. Iman Issa & Dima Hamdan updated to the
+  // fuller text from the master list. Briana Lopez & velda alessa are rating-only
+  // (no text visible in screenshots — no text invented).
   const reviews = [
     {
       name: 'Iman Issa',
       rating: 5,
-      review: 'Services: Stylist: One of the best beauty experiences I\'ve had. Nisreen is extremely...',
+      review: 'Stylist: One of the best beauty experiences I\u2019ve had. Nesreen is extremely skilled and has a great eye for detail and symmetry. My brows look natural, soft, and beautifully shaped. The whole process was comfortable and professional. I would definitely recommend Atelie Bie to anyone considering microblading.',
       image: '/reviews/imanrev.png',
-      timeAgo: '2 weeks ago'
+      timeAgo: 'Edited 5 months ago'
     },
     {
       name: 'Dima Hamdan',
       rating: 5,
-      review: 'Microblading done here! The artist was extremely professional, took time to explain the whole process and made sure the shape and...',
+      review: 'I had an amazing experience getting my microblading done here! The artist was extremely professional, patient, and very talented. She took the time to explain the whole process and made sure the shape and color were perfect for my face.',
       image: '/reviews/dima.png',
-      timeAgo: '2 weeks ago'
+      timeAgo: 'Edited 4 months ago'
     },
     {
       name: 'Basma El Sarwy',
       rating: 5,
       review: 'Amazing experience and beautiful results!',
       image: '/reviews/basema.png',
-      timeAgo: '2 weeks ago'
+      timeAgo: '5 months ago'
     },
     {
       name: 'Sima',
@@ -420,38 +443,93 @@ const ReviewsSection = () => {
       rating: 5,
       review: 'Really happy with my eyebrow microblading results. The shape came out natural and balanced, and the whole process was smooth and professional. Nesreen paid attention to detail and made sure I was comfortable the entire time. Definitely recommend if you\u2019re looking for soft, natural looking brows.',
       image: '/reviews/Nora Perez.png',
-      timeAgo: '2 weeks ago'
+      timeAgo: '3 months ago'
     },
     {
       name: 'Hala Alkhatib',
       rating: 5,
       review: 'I did microblading with Nasreen, and she was amazing. She did such a good job, was super professional, and so sweet. I would definitely recommend her to anyone looking to get microblading for their eyebrows.',
       image: '/reviews/halna.png',
-      timeAgo: '2 weeks ago'
+      timeAgo: '4 months ago'
     },
     {
       name: 'Hala Alkhatib',
       rating: 5,
       review: 'I had the best experience getting my eyebrows done by Nesrin at Atelier Bei. She is incredibly talented and really knows how to shape brows perfectly to suit your face. She takes her time, pays attention to every detail, and makes sure you\u2019re comfortable the whole time. My brows have never looked this clean, natural, and perfectly shaped. You can tell she truly cares about her work and her clients. I\u2019m honestly so happy with the results and will definitely keep going back. Highly recommend Nesrin at Atelier Bei if you want flawless eyebrows!',
       image: '/reviews/Hala Alkhatib.png',
+      timeAgo: '3 months ago'
+    },
+    {
+      name: 'Carrara Stratton',
+      rating: 5,
+      review: 'I walked in with very thin eyebrows and left with full and natural looking eyebrows. I\u2019m very happy with Nesreens work.The atmosphere in her office is clean and relaxing, she makes the whole experience comfortable.\u2B50\u2B50\u2B50\u2B50\u2B50',
+      image: null,
+      timeAgo: '4 months ago'
+    },
+    {
+      name: 'Tanya Semerjian',
+      rating: 5,
+      review: 'I did Microblading,Nesreen Is very talented and so sweet. You feel very comfortable and she did a great job.',
+      image: null,
+      timeAgo: '3 months ago'
+    },
+    {
+      name: 'rsazza76',
+      rating: 5,
+      review: 'Stellar results! Love my eyebrows now more than ever. Definitely recommend Nesreen is the best.',
+      image: null,
+      timeAgo: '4 months ago'
+    },
+    {
+      name: 'michala monroe',
+      rating: 5,
+      review: 'Really looking forward to seeing these all healed up! We had a great experience today for the first microblading',
+      image: null,
+      timeAgo: '3 months ago'
+    },
+    {
+      name: 'Laurie Lawver',
+      rating: 5,
+      review: 'So excited and so happy with my beautiful brows! 100% recommend!',
+      image: null,
+      timeAgo: '3 months ago'
+    },
+    {
+      name: 'Afsaneh Javahery',
+      rating: 5,
+      review: 'I love youuuuuuuu , wonderful job \u2764\uFE0F\u2764\uFE0F\u2764\uFE0F\u2764\uFE0F\u2764\uFE0F\u2764\uFE0F',
+      image: null,
+      timeAgo: '4 months ago'
+    },
+    {
+      name: 'Yesenia Delgado',
+      rating: 5,
+      review: 'Recommend 100%, beautiful place and job.',
+      image: null,
       timeAgo: '2 weeks ago'
+    },
+    {
+      name: 'Heidi Lorasbi',
+      rating: 5,
+      review: 'Nesreen was wonderful, super caring and great at her job! My eyebrows looked amazing and the process was easy and painless!',
+      image: null,
+      timeAgo: '2 months ago'
+    },
+    {
+      name: 'Briana Lopez',
+      rating: 5,
+      review: null,
+      image: null,
+      timeAgo: 'a day ago'
+    },
+    {
+      name: 'velda alessa',
+      rating: 5,
+      review: null,
+      image: null,
+      timeAgo: 'a month ago'
     }
   ];
-
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % reviews.length);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, [reviews.length]);
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % reviews.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + reviews.length) % reviews.length);
-  };
 
   return (
     <section id="reviews" className="py-32 bg-beige/30 relative overflow-hidden">
@@ -461,71 +539,10 @@ const ReviewsSection = () => {
           <div className="w-20 h-px bg-gold mx-auto"></div>
         </div>
 
-        <div className="relative max-w-4xl mx-auto">
-          <div className="overflow-hidden">
-            <div 
-              className="flex transition-transform duration-700 ease-in-out"
-              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-            >
-              {reviews.map((review, index) => (
-                <div 
-                  key={index}
-                  className="min-w-full px-4"
-                >
-                  <div className="bg-white p-10 rounded-lg shadow-md mx-auto max-w-2xl">
-                    <div className="space-y-6">
-                      <div className="flex items-center gap-4 justify-center">
-                        <div className="w-16 h-16 rounded-full bg-beige flex items-center justify-center">
-                          {review.image ? (
-                            <img src={review.image} alt={review.name} className="w-full h-full rounded-full object-cover" />
-                          ) : (
-                            <span className="text-gold font-serif text-2xl">{review.name.charAt(0)}</span>
-                          )}
-                        </div>
-                        <div>
-                          <p className="text-[#3A3A3A] font-light text-lg">{review.name}</p>
-                          <p className="text-[#3A3A3A]/40 text-sm font-light">{review.timeAgo}</p>
-                        </div>
-                      </div>
-                      <div className="flex gap-1 justify-center">
-                        {[...Array(review.rating)].map((_, i) => (
-                          <Star key={i} className="w-5 h-5 fill-gold text-gold" />
-                        ))}
-                      </div>
-                      <p className="text-[#3A3A3A]/70 font-light leading-relaxed text-center text-lg">
-                        "{review.review}"
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <button
-            onClick={prevSlide}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white/80 hover:bg-white p-3 rounded-full shadow-md transition-all duration-300"
-          >
-            <ChevronLeft className="w-6 h-6 text-gold" />
-          </button>
-          <button
-            onClick={nextSlide}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white/80 hover:bg-white p-3 rounded-full shadow-md transition-all duration-300"
-          >
-            <ChevronRight className="w-6 h-6 text-gold" />
-          </button>
-
-          <div className="flex justify-center gap-2 mt-8">
-            {reviews.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentSlide(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  currentSlide === index ? 'bg-gold w-8' : 'bg-gold/30'
-                }`}
-              />
-            ))}
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+          {reviews.map((review, index) => (
+            <ReviewCard key={index} review={review} />
+          ))}
         </div>
 
         <div className="text-center mt-12">
@@ -541,6 +558,59 @@ const ReviewsSection = () => {
         </div>
       </div>
     </section>
+  );
+};
+
+const ReviewCard = ({ review }) => {
+  const [expanded, setExpanded] = React.useState(false);
+  // Threshold roughly matching ~4-6 lines of card text.
+  const LONG_THRESHOLD = 160;
+  const hasText = review.review && review.review.length > 0;
+  const isLong = hasText && review.review.length > LONG_THRESHOLD;
+
+  return (
+    <div className="bg-white p-6 md:p-8 rounded-lg shadow-md flex flex-col h-full">
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-12 h-12 rounded-full bg-beige flex items-center justify-center flex-shrink-0">
+          {review.image ? (
+            <img src={review.image} alt={review.name} className="w-full h-full rounded-full object-cover" />
+          ) : (
+            <span className="text-gold font-serif text-xl">{review.name.charAt(0)}</span>
+          )}
+        </div>
+        <div className="min-w-0">
+          <p className="text-[#3A3A3A] font-light text-base truncate">{review.name}</p>
+          <p className="text-[#3A3A3A]/40 text-xs font-light">{review.timeAgo}</p>
+        </div>
+      </div>
+
+      <div className="flex gap-1 mb-4">
+        {[...Array(review.rating)].map((_, i) => (
+          <Star key={i} className="w-4 h-4 fill-gold text-gold" />
+        ))}
+      </div>
+
+      {hasText && (
+        <>
+          <p
+            className={`text-[#3A3A3A]/70 font-light leading-relaxed text-sm whitespace-pre-line ${
+              !expanded && isLong ? 'review-clamp' : ''
+            }`}
+          >
+            "{review.review}"
+          </p>
+
+          {isLong && (
+            <button
+              onClick={() => setExpanded((prev) => !prev)}
+              className="mt-3 self-start text-gold hover:text-[#3A3A3A] text-xs font-light tracking-wide transition-colors duration-300"
+            >
+              {expanded ? 'Read less' : 'Read more'}
+            </button>
+          )}
+        </>
+      )}
+    </div>
   );
 };
 
@@ -647,7 +717,7 @@ const LocationSection = () => {
   );
 };
 
-const BookingCTASection = ({ onNavigate }) => {
+const BookingCTASection = () => {
   return (
     <section id="booking" className="py-24 bg-blush/20">
       <div className="container mx-auto px-6 lg:px-12">
@@ -656,18 +726,17 @@ const BookingCTASection = ({ onNavigate }) => {
             <h2 className="text-5xl font-serif font-light text-[#3A3A3A]">Book an Appointment</h2>
             <div className="w-20 h-px bg-gold mx-auto"></div>
             <p className="text-lg text-[#3A3A3A]/70 font-light leading-relaxed">
-              Choose the service, date, and time that works best for you. Reserve your spot instantly
-              with our online booking calendar.
+              Send us a text message and we'll help you choose the service, date, and time that works best for you.
             </p>
           </div>
 
-          <button
-            onClick={() => onNavigate('/book')}
-            className="px-14 py-5 bg-gold text-white rounded-full font-light tracking-wide text-base
-                       hover:bg-opacity-90 transition-all duration-500 shadow-md hover:shadow-xl hover:-translate-y-0.5"
+          <a
+            href="sms:+17146514892"
+            className="inline-block px-14 py-5 bg-gold text-white rounded-full font-light tracking-wide text-base
+                       hover:bg-opacity-90 transition-all duration-500 shadow-md hover:shadow-xl hover:-translate-y-0.5 no-underline"
           >
             Book Your Appointment
-          </button>
+          </a>
         </div>
       </div>
     </section>
