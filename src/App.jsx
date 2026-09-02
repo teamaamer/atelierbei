@@ -91,9 +91,17 @@ const Navbar = ({ scrollY, onNavigate }) => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md" style={{ backgroundColor: 'rgba(243, 239, 235, 0.95)' }}>
       <div className="container mx-auto px-4 lg:px-12">
-        <div className="flex items-center justify-center md:justify-between h-16">
+        <div className="flex items-center justify-between h-16">
 
-          <div className="flex items-center space-x-4 md:space-x-12 flex-1 justify-center overflow-x-auto">
+          <div className="flex items-center flex-shrink-0">
+            <img
+              src="/logo.png"
+              alt="Atelier Bei"
+              className="h-10 md:h-12 w-auto object-contain"
+            />
+          </div>
+
+          <div className="flex items-center space-x-4 md:space-x-10 flex-1 justify-center overflow-x-auto">
             {navItems.map((item) => (
               <button
                 key={item.id}
@@ -109,7 +117,7 @@ const Navbar = ({ scrollY, onNavigate }) => {
           <a
             href="sms:+17146514892"
             className="hidden md:block px-8 py-2.5 rounded-full text-sm font-light tracking-wide
-                       hover:opacity-80 transition-all duration-500 shadow-sm hover:shadow-md no-underline"
+                       hover:opacity-80 transition-all duration-500 shadow-sm hover:shadow-md no-underline flex-shrink-0"
             style={{ backgroundColor: '#b5945c', color: 'white' }}
           >
             Book Appointment
@@ -139,7 +147,7 @@ const HeroSection = ({ scrollY }) => {
         <source src="/ATHERO.MOV" type="video/quicktime" />
       </video>
 
-      {/* Subtle dark overlay/gradient to keep logo & navbar readable */}
+      {/* Subtle dark overlay/gradient to keep navbar readable over video */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -147,16 +155,6 @@ const HeroSection = ({ scrollY }) => {
             'linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.12) 35%, rgba(0,0,0,0.05) 60%, rgba(0,0,0,0.25) 100%)'
         }}
       />
-
-      {/* Atelier Bei logo - top-right, aligned under navbar */}
-      <div className="absolute top-0 right-0 z-10 pr-5 md:pr-12 pt-24 md:pt-28 pointer-events-none">
-        <img
-          src="/logo.png"
-          alt="Atelier Bei"
-          className="w-16 md:w-28 h-auto object-contain"
-          style={{ filter: 'drop-shadow(0 2px 10px rgba(0,0,0,0.45))' }}
-        />
-      </div>
     </section>
   );
 };
