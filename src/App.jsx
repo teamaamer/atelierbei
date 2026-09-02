@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, lazy, Suspense } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Star, Instagram, MapPin, Phone, Mail, ChevronRight, Facebook, MessageCircle, Menu, X } from 'lucide-react';
 
 // Lightweight client-side router (pathname based). Netlify catch-all serves index.html.
@@ -142,8 +142,8 @@ const Navbar = ({ onNavigate }) => {
               <img
                 src="/logo.webp"
                 alt="Atelier Bei"
-                width={120}
-                height={150}
+                width={180}
+                height={225}
                 className="h-16 md:h-20 w-auto object-contain"
                 style={{ transform: 'scale(1.6)', transformOrigin: 'left center' }}
               />
@@ -224,11 +224,11 @@ const Navbar = ({ onNavigate }) => {
 };
 
 const HeroSection = () => {
-  const [videoReady, setVideoReady] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
 
   useEffect(() => {
-    // Start loading video shortly after first paint to avoid blocking LCP
-    const timer = setTimeout(() => setVideoReady(true), 100);
+    // Defer video element creation until after first paint
+    const timer = setTimeout(() => setVideoLoaded(true), 200);
     return () => clearTimeout(timer);
   }, []);
 
@@ -238,7 +238,7 @@ const HeroSection = () => {
       className="relative w-full overflow-hidden bg-black"
       style={{ height: '88vh' }}
     >
-      {/* LCP element: optimized poster image, discovered immediately in HTML */}
+      {/* LCP element: poster visible immediately at opacity 1, NO fade-in */}
       <img
         src="/hero-poster-mobile.webp"
         srcSet="/hero-poster-mobile.webp 480w, /hero-poster-desktop.webp 1920w"
@@ -248,11 +248,10 @@ const HeroSection = () => {
         height={270}
         fetchpriority="high"
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ opacity: videoReady ? 0 : 1, transition: 'opacity 0.8s ease-out' }}
       />
 
-      {/* Video loads after first paint, fades in over poster */}
-      {videoReady && (
+      {/* Video loads after first paint, fades IN over poster when ready */}
+      {videoLoaded && (
         <video
           autoPlay
           muted
@@ -285,10 +284,13 @@ const HeroImageSection = () => {
     <section className="w-full bg-ivory py-12 md:py-20">
       <div className="w-full fade-in-up">
         <img
-          src="/nisreen/cover.webp"
+          src="/nisreen/cover-768.webp"
+          srcSet="/nisreen/cover-480.webp 480w, /nisreen/cover-768.webp 768w, /nisreen/cover-1200.webp 1200w, /nisreen/cover-1920.webp 1920w"
+          sizes="(max-width: 768px) 100vw, 1200px"
           alt="Atelier Bei"
           width={1920}
           height={1080}
+          loading="lazy"
           className="w-full h-auto object-cover block"
         />
       </div>
@@ -303,10 +305,12 @@ const AboutSection = () => {
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div className="order-2 md:order-1 flex justify-center">
             <img
-              src="/nisreen/personalnisreen.webp"
+              src="/nisreen/personalnisreen-640.webp"
+              srcSet="/nisreen/personalnisreen-640.webp 640w, /nisreen/personalnisreen-800.webp 800w"
+              sizes="(max-width: 768px) 90vw, 400px"
               alt="Nisreen"
-              width={800}
-              height={1200}
+              width={640}
+              height={960}
               loading="lazy"
               className="w-full max-w-sm rounded-lg shadow-md object-cover"
             />
@@ -370,10 +374,12 @@ const ServicesSection = () => {
 
               <div className="my-4">
                 <img 
-                  src="/beforeafter/services1.webp" 
+                  src="/beforeafter/services1-640.webp"
+                  srcSet="/beforeafter/services1-640.webp 640w, /beforeafter/services1-768.webp 768w"
+                  sizes="(max-width: 768px) 100vw, 768px"
                   alt="Microblading Process" 
-                  width={1536}
-                  height={1024}
+                  width={768}
+                  height={512}
                   loading="lazy"
                   className="w-full max-w-3xl mx-auto rounded-lg shadow-sm object-cover"
                   style={{ maxHeight: '400px' }}
@@ -677,7 +683,8 @@ const ReviewsSection = () => {
             href="https://share.google/a9DheYZU8AHvRvSG0"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-gold hover:text-[#3A3A3A] transition-colors duration-300 font-light py-2"
+            className="inline-flex items-center gap-2 hover:text-[#3A3A3A] transition-colors duration-300 font-light py-2"
+            style={{ color: '#8B7340' }}
           >
             See More Reviews
             <ChevronRight className="w-4 h-4" />
@@ -706,7 +713,7 @@ const ReviewCard = ({ review }) => {
         </div>
         <div className="min-w-0">
           <p className="text-[#3A3A3A] font-light text-base truncate">{review.name}</p>
-          <p className="text-[#3A3A3A]/40 text-xs font-light">{review.timeAgo}</p>
+          <p className="text-[#3A3A3A]/60 text-xs font-light">{review.timeAgo}</p>
         </div>
       </div>
 
@@ -729,8 +736,8 @@ const ReviewCard = ({ review }) => {
           {isLong && (
             <button
               onClick={() => setExpanded((prev) => !prev)}
-              className="mt-3 self-start text-gold hover:text-[#3A3A3A] text-xs font-light tracking-wide transition-colors duration-300 py-2"
-              style={{ minHeight: '44px' }}
+              className="mt-3 self-start hover:text-[#3A3A3A] text-xs font-light tracking-wide transition-colors duration-300 py-2"
+              style={{ color: '#8B7340', minHeight: '44px' }}
             >
               {expanded ? 'Read less' : 'Read more'}
             </button>
@@ -824,7 +831,8 @@ const LocationSection = () => {
                 href="https://www.instagram.com/reel/DVqh7x1FRVt/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gold hover:text-[#3A3A3A] transition-colors duration-300 font-light inline-flex items-center gap-2 py-2"
+                className="hover:text-[#3A3A3A] transition-colors duration-300 font-light inline-flex items-center gap-2 py-2"
+                style={{ color: '#8B7340' }}
               >
                 View on Instagram
                 <Instagram className="w-4 h-4" />

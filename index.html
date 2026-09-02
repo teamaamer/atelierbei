@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Preload mobile hero poster for instant LCP -->
-    <link rel="preload" as="image" href="/hero-poster-mobile.webp" fetchpriority="high" />
+    <!-- Responsive hero poster preload — only one version per device -->
+    <link rel="preload" as="image" href="/hero-poster-mobile.webp" media="(max-width: 767px)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/hero-poster-desktop.webp" media="(min-width: 768px)" fetchpriority="high" />
 
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -22,17 +23,39 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@300;400;500&display=swap" media="print" onload="this.media='all'">
 
-    <!-- Google tag (gtag.js) - deferred -->
-    <script defer src="https://www.googletagmanager.com/gtag/js?id=AW-18016463670"></script>
-    <script defer>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'AW-18016463670');
+    <!-- Google Ads (gtag.js) — deferred to idle to avoid blocking render -->
+    <script>
+      window.addEventListener('load', function() {
+        var ric = window.requestIdleCallback || function(cb) { return setTimeout(cb, 1); };
+        ric(function() {
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-18016463670';
+          s.onload = function() {
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-18016463670');
+          };
+          document.head.appendChild(s);
+        });
+      });
     </script>
 
-    <!-- Metricool Analytics - deferred -->
-    <script defer>function loadScript(a){var b=document.getElementsByTagName("head")[0],c=document.createElement("script");c.type="text/javascript",c.src="https://tracker.metricool.com/resources/be.js",c.onreadystatechange=a,c.onload=a,b.appendChild(c)}loadScript(function(){beTracker.t({hash:"731bba77b823cff05d5b09829b6d0eb3"})});</script>
+    <!-- Metricool Analytics — deferred to idle -->
+    <script>
+      window.addEventListener('load', function() {
+        var ric = window.requestIdleCallback || function(cb) { return setTimeout(cb, 1); };
+        ric(function() {
+          var b = document.getElementsByTagName("head")[0];
+          var c = document.createElement("script");
+          c.type = "text/javascript";
+          c.src = "https://tracker.metricool.com/resources/be.js";
+          c.onload = function() { beTracker.t({hash:"731bba77b823cff05d5b09829b6d0eb3"}); };
+          b.appendChild(c);
+        });
+      });
+    </script>
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
