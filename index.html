@@ -15,9 +15,15 @@
 
     <!-- Critical CSS for hero section — inline to avoid render blocking -->
     <style>
+      /* System font stack for instant render */
+      body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;margin:0;padding:0}
       #root{min-height:100vh;background-color:#F8F6F3}
       #home{position:relative;width:100%;overflow:hidden;background-color:#000;height:88vh}
       #home img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+      /* Navbar critical styles */
+      nav{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(12px);background-color:rgba(243,239,235,0.95)}
+      nav img{height:4rem;width:auto;object-fit:contain}
+      @media(min-width:768px){nav img{height:5rem}}
     </style>
 
     <!-- Google Tag Manager -->
@@ -84,10 +90,26 @@
     }
     </script>
 
-    <!-- Fonts: non-blocking load with swap fallback -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@300;400;500&display=swap" media="print" onload="this.media='all'">
+    <!-- Fonts: completely deferred to avoid render-blocking -->
+    <script>
+      window.addEventListener('load', function() {
+        var link1 = document.createElement('link');
+        link1.rel = 'preconnect';
+        link1.href = 'https://fonts.googleapis.com';
+        document.head.appendChild(link1);
+        
+        var link2 = document.createElement('link');
+        link2.rel = 'preconnect';
+        link2.href = 'https://fonts.gstatic.com';
+        link2.crossOrigin = 'anonymous';
+        document.head.appendChild(link2);
+        
+        var link3 = document.createElement('link');
+        link3.rel = 'stylesheet';
+        link3.href = 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@300;400;500&display=swap';
+        document.head.appendChild(link3);
+      });
+    </script>
 
     <!-- Google Ads (gtag.js) — deferred to idle to avoid blocking render -->
     <script>
