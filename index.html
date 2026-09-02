@@ -4,9 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Responsive hero poster preload — only one version per device -->
-    <link rel="preload" as="image" href="/hero-poster-mobile.webp" media="(max-width: 767px)" fetchpriority="high" />
-    <link rel="preload" as="image" href="/hero-poster-desktop.webp" media="(min-width: 768px)" fetchpriority="high" />
+    <!-- Hero poster preload — uses imagesrcset/imagesizes to match the <img> selection exactly -->
+    <link
+      rel="preload"
+      as="image"
+      imagesrcset="/hero-poster-mobile.webp 480w, /hero-poster-desktop.webp 1920w"
+      imagesizes="100vw"
+      fetchpriority="high"
+    />
 
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
