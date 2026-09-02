@@ -991,7 +991,7 @@ const Footer = () => {
 
         <div className="mt-16 pt-8 border-t border-beige/50 text-center">
           <p className="text-[#3A3A3A]/50 font-light text-sm">
-            © 2026 Nisreen Microblading Studio. All rights reserved.
+            © 2026 Atelier Bei Permanent Makeup. All rights reserved.
           </p>
         </div>
       </div>
