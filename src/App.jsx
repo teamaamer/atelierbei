@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, lazy, Suspense } from 'react';
 import { Star, Instagram, MapPin, Phone, Mail, ChevronRight, Facebook, MessageCircle, Menu, X } from 'lucide-react';
 
 // Lightweight client-side router (pathname based). Netlify catch-all serves index.html.
@@ -41,6 +41,16 @@ const useInView = (options = {}) => {
   return [ref, inView];
 };
 
+// Wrapper: renders children only when section approaches viewport
+const LazySection = ({ children, id, minHeight = '200px' }) => {
+  const [ref, inView] = useInView({ rootMargin: '400px' });
+  return (
+    <div ref={ref} id={id} style={{ minHeight: inView ? 'auto' : minHeight }}>
+      {inView ? children : null}
+    </div>
+  );
+};
+
 function App() {
   const [route, setRoute] = useState(typeof window !== 'undefined' ? window.location.pathname : '/');
 
@@ -66,10 +76,18 @@ function App() {
           <AboutSection />
           <ServicesSection />
           <HeroImageSection />
-          <BeforeAfterSection />
-          <ReviewsSection />
-          <BeautyBlogSection />
-          <LocationSection />
+          <LazySection id="results" minHeight="600px">
+            <BeforeAfterSection />
+          </LazySection>
+          <LazySection id="reviews" minHeight="500px">
+            <ReviewsSection />
+          </LazySection>
+          <LazySection minHeight="400px">
+            <BeautyBlogSection />
+          </LazySection>
+          <LazySection id="contact" minHeight="600px">
+            <LocationSection />
+          </LazySection>
           <BookingCTASection />
         </>
       )}
@@ -206,26 +224,51 @@ const Navbar = ({ onNavigate }) => {
 };
 
 const HeroSection = () => {
+  const [videoReady, setVideoReady] = useState(false);
+
+  useEffect(() => {
+    // Start loading video shortly after first paint to avoid blocking LCP
+    const timer = setTimeout(() => setVideoReady(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <section
       id="home"
       className="relative w-full overflow-hidden bg-black"
       style={{ height: '88vh' }}
     >
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        poster="/hero-poster.webp"
+      {/* LCP element: optimized poster image, discovered immediately in HTML */}
+      <img
+        src="/hero-poster-mobile.webp"
+        srcSet="/hero-poster-mobile.webp 480w, /hero-poster-desktop.webp 1920w"
+        sizes="100vw"
+        alt="Atelier Bei — Luxury Microblading Studio"
+        width={480}
+        height={270}
+        fetchpriority="high"
         className="absolute inset-0 w-full h-full object-cover"
-      >
-        <source src="/ATHERO-mobile.mp4" type="video/mp4" media="(max-width: 768px)" />
-        <source src="/ATHERO.mp4" type="video/mp4" />
-      </video>
+        style={{ opacity: videoReady ? 0 : 1, transition: 'opacity 0.8s ease-out' }}
+      />
 
-      {/* Subtle dark overlay/gradient to keep navbar readable over video */}
+      {/* Video loads after first paint, fades in over poster */}
+      {videoReady && (
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ opacity: 0, transition: 'opacity 0.8s ease-out' }}
+          onCanPlay={(e) => { e.target.style.opacity = 1; }}
+        >
+          <source src="/ATHERO-mobile.mp4" type="video/mp4" media="(max-width: 768px)" />
+          <source src="/ATHERO.mp4" type="video/mp4" />
+        </video>
+      )}
+
+      {/* Subtle dark overlay/gradient to keep navbar readable */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -412,7 +455,7 @@ const BeforeAfterSection = () => {
   ];
 
   return (
-    <section id="results" className="py-32 bg-white relative overflow-hidden">
+    <section className="py-32 bg-white relative overflow-hidden">
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
         <div className="text-center space-y-4 mb-20">
           <h2 className="text-5xl font-serif font-light text-[#3A3A3A]">Transformations</h2>
@@ -600,7 +643,7 @@ const ReviewsSection = () => {
   }, [totalRows]);
 
   return (
-    <section id="reviews" className="py-32 bg-beige/30 relative overflow-hidden">
+    <section className="py-32 bg-beige/30 relative overflow-hidden">
       <div className="container mx-auto px-6 lg:px-12">
         <div className="text-center space-y-4 mb-20">
           <h2 className="text-5xl font-serif font-light text-[#3A3A3A]">Google Reviews</h2>
@@ -739,7 +782,7 @@ const BeautyBlogSection = () => {
 
 const LocationSection = () => {
   return (
-    <section id="contact" className="py-32 bg-ivory">
+    <section className="py-32 bg-ivory">
       <div className="container mx-auto px-6 lg:px-12">
         <div className="text-center space-y-4 mb-20">
           <h2 className="text-5xl font-serif font-light text-[#3A3A3A]">Visit Us</h2>
