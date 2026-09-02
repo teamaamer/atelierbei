@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Star, Instagram, MapPin, Phone, Mail, ChevronLeft, ChevronRight, Facebook, MessageCircle, Menu, X } from 'lucide-react';
+import React, { useEffect, useState, useRef } from 'react';
+import { Star, Instagram, MapPin, Phone, Mail, ChevronRight, Facebook, MessageCircle, Menu, X } from 'lucide-react';
 
 // Lightweight client-side router (pathname based). Netlify catch-all serves index.html.
 const navigate = (path) => {
@@ -9,15 +9,40 @@ const navigate = (path) => {
   window.scrollTo(0, 0);
 };
 
-function App() {
-  const [scrollY, setScrollY] = useState(0);
-  const [route, setRoute] = useState(typeof window !== 'undefined' ? window.location.pathname : '/');
-
+// Hook: lazy-load third-party scripts only when needed
+const useLazyScript = (src, condition = true) => {
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    if (!condition) return;
+    const existing = document.querySelector(`script[src="${src}"]`);
+    if (existing) return;
+    const script = document.createElement('script');
+    script.src = src;
+    script.async = true;
+    document.body.appendChild(script);
+  }, [src, condition]);
+};
+
+// Hook: IntersectionObserver for lazy-mounting below-fold sections
+const useInView = (options = {}) => {
+  const ref = useRef(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setInView(true);
+        observer.disconnect();
+      }
+    }, { rootMargin: '200px', ...options });
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
+  return [ref, inView];
+};
+
+function App() {
+  const [route, setRoute] = useState(typeof window !== 'undefined' ? window.location.pathname : '/');
 
   useEffect(() => {
     const handlePop = () => {
@@ -32,14 +57,14 @@ function App() {
 
   return (
     <div className="min-h-screen bg-ivory">
-      <Navbar scrollY={scrollY} onNavigate={navigate} />
+      <Navbar onNavigate={navigate} />
       {isBookingRoute ? (
         <BookingPage />
       ) : (
         <>
-          <HeroSection scrollY={scrollY} />
+          <HeroSection />
           <AboutSection />
-          <ServicesSection onNavigate={navigate} />
+          <ServicesSection />
           <HeroImageSection />
           <BeforeAfterSection />
           <ReviewsSection />
@@ -62,15 +87,13 @@ function App() {
   );
 }
 
-const Navbar = ({ scrollY, onNavigate }) => {
-  const isScrolled = scrollY > 50;
+const Navbar = ({ onNavigate }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const goHome = (sectionId) => {
     setMobileOpen(false);
     if (window.location.pathname !== '/') {
       onNavigate('/');
-      // wait for home to render, then scroll
       setTimeout(() => {
         const el = document.getElementById(sectionId);
         if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -99,8 +122,10 @@ const Navbar = ({ scrollY, onNavigate }) => {
             {/* Logo */}
             <div className="flex items-center flex-shrink-0">
               <img
-                src="/logo.png"
+                src="/logo.webp"
                 alt="Atelier Bei"
+                width={120}
+                height={150}
                 className="h-16 md:h-20 w-auto object-contain"
                 style={{ transform: 'scale(1.6)', transformOrigin: 'left center' }}
               />
@@ -112,7 +137,7 @@ const Navbar = ({ scrollY, onNavigate }) => {
                 <button
                   key={item.id}
                   onClick={() => goHome(item.id)}
-                  className="text-sm md:text-base font-normal hover:opacity-70 transition-all duration-300 whitespace-nowrap tracking-wide"
+                  className="text-sm md:text-base font-normal hover:opacity-70 transition-all duration-300 whitespace-nowrap tracking-wide py-2"
                   style={{ color: '#3F4937' }}
                 >
                   {item.label}
@@ -133,8 +158,8 @@ const Navbar = ({ scrollY, onNavigate }) => {
             {/* Mobile hamburger */}
             <button
               onClick={() => setMobileOpen((prev) => !prev)}
-              className="md:hidden flex items-center justify-center flex-shrink-0"
-              style={{ color: '#3F4937' }}
+              className="md:hidden flex items-center justify-center flex-shrink-0 p-2"
+              style={{ color: '#3F4937', minHeight: '44px', minWidth: '44px' }}
               aria-label="Toggle menu"
             >
               {mobileOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
@@ -159,7 +184,7 @@ const Navbar = ({ scrollY, onNavigate }) => {
                 key={item.id}
                 onClick={() => goHome(item.id)}
                 className="text-left py-4 text-lg font-light tracking-wide transition-all duration-300 hover:opacity-70"
-                style={{ color: '#3F4937' }}
+                style={{ color: '#3F4937', minHeight: '48px' }}
               >
                 {item.label}
               </button>
@@ -180,7 +205,7 @@ const Navbar = ({ scrollY, onNavigate }) => {
   );
 };
 
-const HeroSection = ({ scrollY }) => {
+const HeroSection = () => {
   return (
     <section
       id="home"
@@ -192,11 +217,12 @@ const HeroSection = ({ scrollY }) => {
         muted
         loop
         playsInline
-        preload="auto"
+        preload="metadata"
+        poster="/hero-poster.webp"
         className="absolute inset-0 w-full h-full object-cover"
       >
+        <source src="/ATHERO-mobile.mp4" type="video/mp4" media="(max-width: 768px)" />
         <source src="/ATHERO.mp4" type="video/mp4" />
-        <source src="/ATHERO.MOV" type="video/quicktime" />
       </video>
 
       {/* Subtle dark overlay/gradient to keep navbar readable over video */}
@@ -216,8 +242,10 @@ const HeroImageSection = () => {
     <section className="w-full bg-ivory py-12 md:py-20">
       <div className="w-full fade-in-up">
         <img
-          src="/nisreen/cover.jpeg"
+          src="/nisreen/cover.webp"
           alt="Atelier Bei"
+          width={1920}
+          height={1080}
           className="w-full h-auto object-cover block"
         />
       </div>
@@ -228,24 +256,15 @@ const HeroImageSection = () => {
 const AboutSection = () => {
   return (
     <section id="about" className="py-16 md:py-32 bg-white relative overflow-hidden">
-      <div className="absolute top-1/4 -right-32 z-0 opacity-[0.08]" style={{ mixBlendMode: 'multiply' }}>
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-          className="w-[400px] h-auto transform rotate-180"
-        >
-          <source src="/aboutusflower.mp4" type="video/mp4" />
-        </video>
-      </div>
-
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div className="order-2 md:order-1 flex justify-center">
             <img
-              src="/nisreen/personalnisreen.jpg"
+              src="/nisreen/personalnisreen.webp"
               alt="Nisreen"
+              width={800}
+              height={1200}
+              loading="lazy"
               className="w-full max-w-sm rounded-lg shadow-md object-cover"
             />
           </div>
@@ -274,7 +293,7 @@ const AboutSection = () => {
   );
 };
 
-const ServicesSection = ({ onNavigate }) => {
+const ServicesSection = () => {
   const features = [
     'Consultation & Design',
     'Color Matching',
@@ -284,18 +303,6 @@ const ServicesSection = ({ onNavigate }) => {
 
   return (
     <section id="services" className="py-16 bg-ivory relative overflow-hidden">
-      <div className="absolute bottom-0 left-0 z-0 opacity-[0.18]">
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-          className="w-[400px] h-auto"
-        >
-          <source src="/flowervid.mp4" type="video/mp4" />
-        </video>
-      </div>
-
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
         <div className="text-center space-y-4 mb-10">
           <h2 className="text-5xl font-serif font-light text-[#3A3A3A]">Services</h2>
@@ -320,8 +327,11 @@ const ServicesSection = ({ onNavigate }) => {
 
               <div className="my-4">
                 <img 
-                  src="/beforeafter/services1.png" 
+                  src="/beforeafter/services1.webp" 
                   alt="Microblading Process" 
+                  width={1536}
+                  height={1024}
+                  loading="lazy"
                   className="w-full max-w-3xl mx-auto rounded-lg shadow-sm object-cover"
                   style={{ maxHeight: '400px' }}
                 />
@@ -385,36 +395,24 @@ const ServicesSection = ({ onNavigate }) => {
 
 const BeforeAfterSection = () => {
   const results = [
-    '/beforeafter/beforeafter1.jpg',
-    '/beforeafter/beforeafter2.jpg',
-    '/beforeafter/beforeafter3.jpg',
-    '/beforeafter/beforeafter4.jpg',
-    '/beforeafter/beforeafter5.jpg',
-    '/beforeafter/beforeafter6.jpg',
-    '/beforeafter/beforeafter7.jpg',
-    '/beforeafter/beforeafter9.jpg',
-    '/beforeafter/beforeafter10.jpg',
-    '/beforeafter/beforeafter11.jpg',
-    '/beforeafter/beforeafter12.jpg',
-    '/beforeafter/beforeafter13.jpg',
-    '/beforeafter/beforeafter14.jpg',
-    '/beforeafter/beforeafter15.jpg'
+    '/beforeafter/beforeafter1.webp',
+    '/beforeafter/beforeafter2.webp',
+    '/beforeafter/beforeafter3.webp',
+    '/beforeafter/beforeafter4.webp',
+    '/beforeafter/beforeafter5.webp',
+    '/beforeafter/beforeafter6.webp',
+    '/beforeafter/beforeafter7.webp',
+    '/beforeafter/beforeafter9.webp',
+    '/beforeafter/beforeafter10.webp',
+    '/beforeafter/beforeafter11.webp',
+    '/beforeafter/beforeafter12.webp',
+    '/beforeafter/beforeafter13.webp',
+    '/beforeafter/beforeafter14.webp',
+    '/beforeafter/beforeafter15.webp'
   ];
 
   return (
     <section id="results" className="py-32 bg-white relative overflow-hidden">
-      <div className="absolute bottom-0 right-0 z-0 opacity-[0.08]">
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-          className="w-[400px] h-auto"
-        >
-          <source src="/aboutusflower.mp4" type="video/mp4" />
-        </video>
-      </div>
-
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
         <div className="text-center space-y-4 mb-20">
           <h2 className="text-5xl font-serif font-light text-[#3A3A3A]">Transformations</h2>
@@ -432,6 +430,9 @@ const BeforeAfterSection = () => {
               <img 
                 src={image} 
                 alt={`Before and After ${index + 1}`}
+                width={800}
+                height={800}
+                loading="lazy"
                 className="w-full h-full object-cover scale-110 group-hover:scale-115 transition-transform duration-300"
               />
             </div>
@@ -460,21 +461,21 @@ const ReviewsSection = () => {
       name: 'Iman Issa',
       rating: 5,
       review: 'Stylist: One of the best beauty experiences I\u2019ve had. Nesreen is extremely skilled and has a great eye for detail and symmetry. My brows look natural, soft, and beautifully shaped. The whole process was comfortable and professional. I would definitely recommend Atelie Bie to anyone considering microblading.',
-      image: '/reviews/imanrev.png',
+      image: '/reviews/imanrev.webp',
       timeAgo: 'Edited 5 months ago'
     },
     {
       name: 'Dima Hamdan',
       rating: 5,
       review: 'I had an amazing experience getting my microblading done here! The artist was extremely professional, patient, and very talented. She took the time to explain the whole process and made sure the shape and color were perfect for my face.',
-      image: '/reviews/dima.png',
+      image: '/reviews/dima.webp',
       timeAgo: 'Edited 4 months ago'
     },
     {
       name: 'Basma El Sarwy',
       rating: 5,
       review: 'Amazing experience and beautiful results!',
-      image: '/reviews/basema.png',
+      image: '/reviews/basema.webp',
       timeAgo: '5 months ago'
     },
     {
@@ -488,28 +489,28 @@ const ReviewsSection = () => {
       name: 'Shatha Naneesh',
       rating: 5,
       review: 'Excellent work and very professional!',
-      image: '/reviews/Shatha.png',
+      image: '/reviews/Shatha.webp',
       timeAgo: '2 weeks ago'
     },
     {
       name: 'Nora Perez',
       rating: 5,
       review: 'Really happy with my eyebrow microblading results. The shape came out natural and balanced, and the whole process was smooth and professional. Nesreen paid attention to detail and made sure I was comfortable the entire time. Definitely recommend if you\u2019re looking for soft, natural looking brows.',
-      image: '/reviews/Nora Perez.png',
+      image: '/reviews/Nora Perez.webp',
       timeAgo: '3 months ago'
     },
     {
       name: 'Hala Alkhatib',
       rating: 5,
       review: 'I did microblading with Nasreen, and she was amazing. She did such a good job, was super professional, and so sweet. I would definitely recommend her to anyone looking to get microblading for their eyebrows.',
-      image: '/reviews/halna.png',
+      image: '/reviews/halna.webp',
       timeAgo: '4 months ago'
     },
     {
       name: 'Hala Alkhatib',
       rating: 5,
       review: 'I had the best experience getting my eyebrows done by Nesrin at Atelier Bei. She is incredibly talented and really knows how to shape brows perfectly to suit your face. She takes her time, pays attention to every detail, and makes sure you\u2019re comfortable the whole time. My brows have never looked this clean, natural, and perfectly shaped. You can tell she truly cares about her work and her clients. I\u2019m honestly so happy with the results and will definitely keep going back. Highly recommend Nesrin at Atelier Bei if you want flawless eyebrows!',
-      image: '/reviews/Hala Alkhatib.png',
+      image: '/reviews/Hala Alkhatib.webp',
       timeAgo: '3 months ago'
     },
     {
@@ -622,6 +623,7 @@ const ReviewsSection = () => {
                   currentRowIndex === index ? 'bg-gold w-8' : 'bg-gold/30 w-2'
                 }`}
                 aria-label={`Reviews page ${index + 1}`}
+                style={{ minHeight: '44px', minWidth: '44px', padding: '0' }}
               />
             ))}
           </div>
@@ -632,7 +634,7 @@ const ReviewsSection = () => {
             href="https://share.google/a9DheYZU8AHvRvSG0"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-gold hover:text-[#3A3A3A] transition-colors duration-300 font-light"
+            className="inline-flex items-center gap-2 text-gold hover:text-[#3A3A3A] transition-colors duration-300 font-light py-2"
           >
             See More Reviews
             <ChevronRight className="w-4 h-4" />
@@ -644,8 +646,7 @@ const ReviewsSection = () => {
 };
 
 const ReviewCard = ({ review }) => {
-  const [expanded, setExpanded] = React.useState(false);
-  // Threshold roughly matching ~4-6 lines of card text.
+  const [expanded, setExpanded] = useState(false);
   const LONG_THRESHOLD = 160;
   const hasText = review.review && review.review.length > 0;
   const isLong = hasText && review.review.length > LONG_THRESHOLD;
@@ -655,7 +656,7 @@ const ReviewCard = ({ review }) => {
       <div className="flex items-center gap-3 mb-4">
         <div className="w-12 h-12 rounded-full bg-beige flex items-center justify-center flex-shrink-0">
           {review.image ? (
-            <img src={review.image} alt={review.name} className="w-full h-full rounded-full object-cover" />
+            <img src={review.image} alt={review.name} width={48} height={48} loading="lazy" className="w-full h-full rounded-full object-cover" />
           ) : (
             <span className="text-gold font-serif text-xl">{review.name.charAt(0)}</span>
           )}
@@ -685,7 +686,8 @@ const ReviewCard = ({ review }) => {
           {isLong && (
             <button
               onClick={() => setExpanded((prev) => !prev)}
-              className="mt-3 self-start text-gold hover:text-[#3A3A3A] text-xs font-light tracking-wide transition-colors duration-300"
+              className="mt-3 self-start text-gold hover:text-[#3A3A3A] text-xs font-light tracking-wide transition-colors duration-300 py-2"
+              style={{ minHeight: '44px' }}
             >
               {expanded ? 'Read less' : 'Read more'}
             </button>
@@ -697,11 +699,14 @@ const ReviewCard = ({ review }) => {
 };
 
 const BeautyBlogSection = () => {
-  // Elfsight Instagram widget ID
   const elfsightWidgetId = '071dce93-0b23-422c-8801-1d6102ec28b8';
+  const [ref, inView] = useInView({ rootMargin: '300px' });
+
+  // Load Elfsight platform.js only when section approaches viewport
+  useLazyScript('https://elfsightcdn.com/platform.js', inView);
 
   return (
-    <section className="py-32 bg-white">
+    <section className="py-32 bg-white" ref={ref}>
       <div className="container mx-auto px-6 lg:px-12">
         <div className="text-center space-y-4 mb-20">
           <h2 className="text-5xl font-serif font-light text-[#3A3A3A]">Latest from Instagram</h2>
@@ -711,8 +716,8 @@ const BeautyBlogSection = () => {
           </p>
         </div>
 
-        <div className="max-w-6xl mx-auto mb-12">
-          <div className={`elfsight-app-${elfsightWidgetId}`}></div>
+        <div className="max-w-6xl mx-auto mb-12" style={{ minHeight: '400px' }}>
+          {inView && <div className={`elfsight-app-${elfsightWidgetId}`}></div>}
         </div>
 
         <div className="text-center mt-12">
@@ -747,6 +752,7 @@ const LocationSection = () => {
         <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto items-center">
           <div className="rounded-lg overflow-hidden shadow-md h-[600px]">
             <iframe
+              title="Atelier Bei Location Map"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3320.8675891234567!2d-117.9965571!3d33.6545474!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80dd212071815fbb%3A0xc820ad3e061baf51!2sAtelier%20Bei%20Permanent%20Makeup!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
               width="100%"
               height="100%"
@@ -760,12 +766,14 @@ const LocationSection = () => {
           <div className="bg-beige/20 rounded-lg overflow-hidden shadow-md">
             <div className="aspect-[9/16] max-h-[600px]">
               <iframe
+                title="Atelier Bei Instagram Reel"
                 src="https://www.instagram.com/reel/DVqh7x1FRVt/embed"
                 className="w-full h-full"
                 frameBorder="0"
                 scrolling="no"
                 allowTransparency="true"
                 allow="encrypted-media"
+                loading="lazy"
               ></iframe>
             </div>
             <div className="p-6 text-center">
@@ -773,7 +781,7 @@ const LocationSection = () => {
                 href="https://www.instagram.com/reel/DVqh7x1FRVt/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gold hover:text-[#3A3A3A] transition-colors duration-300 font-light inline-flex items-center gap-2"
+                className="text-gold hover:text-[#3A3A3A] transition-colors duration-300 font-light inline-flex items-center gap-2 py-2"
               >
                 View on Instagram
                 <Instagram className="w-4 h-4" />
@@ -826,7 +834,6 @@ const BookingCTASection = () => {
 };
 
 const BookingPage = () => {
-  // Load the 255 form_embed.js script once when the booking page mounts.
   useEffect(() => {
     const existing = document.querySelector('script[src="https://api.255adv.com/js/form_embed.js"]');
     if (existing) return;
@@ -835,9 +842,6 @@ const BookingPage = () => {
     script.type = 'text/javascript';
     script.async = true;
     document.body.appendChild(script);
-    return () => {
-      // leave the script in place; it is harmless if navigated back to
-    };
   }, []);
 
   return (
@@ -889,7 +893,7 @@ const Footer = () => {
                     });
                   }
                 }}
-                className="flex items-center gap-2 justify-center md:justify-start hover:text-gold transition-colors duration-300"
+                className="flex items-center gap-2 justify-center md:justify-start hover:text-gold transition-colors duration-300 py-1"
               >
                 <Phone className="w-4 h-4 text-gold" />
                 <span>(714) 651-4892</span>
@@ -916,7 +920,7 @@ const Footer = () => {
                 href="https://www.instagram.com/atelierbei"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 hover:opacity-70 transition-opacity"
+                className="flex items-center gap-2 hover:opacity-70 transition-opacity py-1"
               >
                 <Instagram className="w-5 h-5 text-gold" />
                 <span className="text-[#3A3A3A]/70 font-light text-sm">@atelierbei</span>
@@ -925,7 +929,7 @@ const Footer = () => {
                 href="https://www.facebook.com/atelierbei"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 hover:opacity-70 transition-opacity"
+                className="flex items-center gap-2 hover:opacity-70 transition-opacity py-1"
               >
                 <Facebook className="w-5 h-5 text-gold" />
                 <span className="text-[#3A3A3A]/70 font-light text-sm">Atelier Bei</span>
