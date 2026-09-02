@@ -97,7 +97,8 @@ const Navbar = ({ scrollY, onNavigate }) => {
             <img
               src="/logo.png"
               alt="Atelier Bei"
-              className="h-10 md:h-12 w-auto object-contain"
+              className="h-16 md:h-20 w-auto object-contain"
+              style={{ transform: 'scale(1.6)', transformOrigin: 'left center' }}
             />
           </div>
 
